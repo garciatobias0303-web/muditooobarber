@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muditooo Barber</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #111;
+      color: white;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 20px;
+      background: #000;
+    }
+
+    header h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: #ccc;
+      font-size: 18px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 35px 20px;
+    }
+
+    .card {
+      background: #1c1c1c;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 7px;
+      color: #ddd;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      background: white;
+      color: black;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ddd;
+    }
+
+    .horarios {
+      text-align: center;
+      line-height: 1.8;
+      color: #ddd;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #888;
+      background: #000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>MUDITOOO BARBER</h1>
+    <p>Tu corte, tu estilo.</p>
+  </header>
+
+  <div class="container">
+
+    <div class="card">
+      <h2>📅 Reservá tu turno</h2>
+
+      <form id="reservaForm">
+
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" required>
+
+        <label for="fecha">Fecha</label>
+        <input type="date" id="fecha" required>
+
+        <label for="hora">Hora</label>
+        <select id="hora" required>
+          <option value="">Elegí un horario</option>
+          <option>14:40</option>
+          <option>15:00</option>
+          <option>15:20</option>
+          <option>15:40</option>
+          <option>16:00</option>
+          <option>16:20</option>
+          <option>16:40</option>
+          <option>17:00</option>
+          <option>17:20</option>
+          <option>17:40</option>
+          <option>18:00</option>
+          <option>18:20</option>
+          <option>18:40</option>
+          <option>19:00</option>
+          <option>19:20</option>
+          <option>19:40</option>
+          <option>20:00</option>
+          <option>20:20</option>
+          <option>20:40</option>
+          <option>21:00</option>
+          <option>21:20</option>
+          <option>21:40</option>
+        </select>
+
+        <button type="submit">Reservar turno</button>
+
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>🕐 Horarios</h2>
+
+      <div class="horarios">
+        <p><strong>Lunes a sábado</strong></p>
+        <p>14:40 a 21:40</p>
+        <p>Domingo: cerrado</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>✂️ Muditooo Barber</h2>
+      <p style="text-align:center; color:#ccc;">
+        Reservá tu turno de manera rápida y sencilla.
+      </p>
+    </div>
+
+  </div>
+
+  <footer>
+    © 2026 Muditooo Barber
+  </footer>
+
+  <script>
+    document.getElementById("reservaForm").addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+      const nombre = document.getElementById("nombre").value;
+      const fecha = document.getElementById("fecha").value;
+      const hora = document.getElementById("hora").value;
+
+      const correo = "garciatobias0303@gmail.com";
+
+      const asunto = "Reserva de turno - Muditooo Barber";
+
+      const mensaje =
+        "Hola, quiero reservar un turno.%0A%0A" +
+        "Nombre: " + nombre + "%0A" +
+        "Fecha: " + fecha + "%0A" +
+        "Hora: " + hora;
+
+      window.location.href =
+        "mailto:" + correo +
+        "?subject=" + encodeURIComponent(asunto) +
+        "&body=" + mensaje;
+
+    });
+  </script>
+
+</body>
+</html>
+Ahora hacé esto
+Copiá todo el código de arriba.
+Pegalo en el editor de GitHub.
+Tocá “Compromete los cambios…” arriba a la derecha.
+Después confirmá “Comprometer los cambios”.
+
+Cuando lo hayas hecho, decime “listo” y seguimos con GitHub Pages para poner la página online. 🚀

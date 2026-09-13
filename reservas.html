@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservar turno - Muditooo Barber</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #111;
+      color: white;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 30px 0 10px;
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: #1c1c1c;
+      padding: 25px;
+      border-radius: 15px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .dias {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .dia {
+      background: #292929;
+      padding: 12px 5px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .dia:hover {
+      background: #444;
+    }
+
+    .dia.seleccionado {
+      background: white;
+      color: black;
+    }
+
+    .horarios {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .hora {
+      padding: 14px;
+      background: #292929;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .hora:hover {
+      background: #444;
+    }
+
+    .mensaje {
+      text-align: center;
+      color: #aaa;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>✂️ MUDITOOO BARBER</h1>
+
+    <p class="subtitulo">
+      Elegí el día y horario de tu turno
+    </p>
+
+    <div class="card">
+
+      <h2>📅 Reservar turno</h2>
+
+      <div class="dias">
+        <div class="dia">Lun</div>
+        <div class="dia">Mar</div>
+        <div class="dia">Mié</div>
+        <div class="dia">Jue</div>
+        <div class="dia">Vie</div>
+        <div class="dia">Sáb</div>
+        <div class="dia">Dom</div>
+      </div>
+
+      <div class="horarios">
+
+        <button class="hora">14:40</button>
+        <button class="hora">15:40</button>
+        <button class="hora">16:40</button>
+        <button class="hora">17:40</button>
+        <button class="hora">18:40</button>
+        <button class="hora">19:40</button>
+        <button class="hora">20:40</button>
+
+      </div>
+
+      <p class="mensaje">
+        Los horarios se podrán reservar cuando conectemos el sistema.
+      </p>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

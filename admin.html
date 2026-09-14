@@ -4,9 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>MUDITOOO BARBER - Admin</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -14,42 +16,97 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #111;
+      background: #0d0d0d;
       color: white;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 850px;
       margin: auto;
-      padding: 25px 15px;
+      padding: 20px 15px 40px;
     }
 
     h1 {
       text-align: center;
       margin-bottom: 5px;
+      letter-spacing: 1px;
     }
 
     .subtitulo {
       text-align: center;
-      color: #aaa;
+      color: #999;
+      margin-top: 0;
       margin-bottom: 25px;
     }
 
     .card {
-      background: #1c1c1c;
+      background: #191919;
       padding: 20px;
-      border-radius: 15px;
+      border-radius: 16px;
       margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.25);
     }
 
     h2 {
       margin-top: 0;
     }
 
+    /* BOTON ACTUALIZAR */
+
+    .actualizar {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      background: white;
+      color: #111;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    /* TURNOS DE HOY */
+
+    .hoy {
+      border: 1px solid #333;
+    }
+
+    .turno-hoy {
+      background: #242424;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .turno-hoy:last-child {
+      margin-bottom: 0;
+    }
+
+    .turno-hoy strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .turno-hoy p {
+      margin: 5px 0;
+      color: #ccc;
+    }
+
+    .sin-turnos {
+      color: #888;
+      text-align: center;
+      padding: 15px;
+    }
+
+    /* MES */
+
     .mes {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
       margin-bottom: 20px;
     }
 
@@ -57,9 +114,9 @@
       background: #333;
       color: white;
       border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-size: 20px;
+      padding: 10px 18px;
+      border-radius: 9px;
+      font-size: 22px;
       cursor: pointer;
     }
 
@@ -67,12 +124,15 @@
       font-size: 20px;
       font-weight: bold;
       text-transform: capitalize;
+      text-align: center;
     }
 
+    /* TURNOS */
+
     .turno {
-      background: #292929;
+      background: #242424;
       padding: 15px;
-      border-radius: 10px;
+      border-radius: 12px;
       margin-bottom: 10px;
     }
 
@@ -91,17 +151,18 @@
     .bloquear,
     .desbloquear {
       width: 100%;
-      padding: 10px;
+      padding: 11px;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       color: white;
       font-weight: bold;
       cursor: pointer;
       margin-top: 10px;
+      font-size: 15px;
     }
 
     .cancelar {
-      background: #b00020;
+      background: #a90020;
     }
 
     .bloquear {
@@ -111,6 +172,8 @@
     .desbloquear {
       background: #555;
     }
+
+    /* FORMULARIO */
 
     label {
       display: block;
@@ -123,7 +186,7 @@
     select {
       width: 100%;
       padding: 12px;
-      border-radius: 8px;
+      border-radius: 9px;
       border: none;
       font-size: 16px;
     }
@@ -131,13 +194,14 @@
     .guardar {
       width: 100%;
       margin-top: 15px;
-      padding: 12px;
+      padding: 13px;
       border: none;
-      border-radius: 8px;
-      background: #fff;
+      border-radius: 9px;
+      background: white;
       color: #111;
       font-weight: bold;
       cursor: pointer;
+      font-size: 16px;
     }
 
     .mensaje {
@@ -155,7 +219,7 @@
 
     .vacio {
       text-align: center;
-      color: #999;
+      color: #888;
       padding: 20px;
     }
 
@@ -166,8 +230,17 @@
       text-decoration: none;
       margin-top: 20px;
     }
+
+    .fecha-hoy {
+      color: #aaa;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 20px;
+    }
+
   </style>
 </head>
+
 
 <body>
 
@@ -178,6 +251,39 @@
   <p class="subtitulo">
     📅 Panel de administrador
   </p>
+
+
+  <!-- ACTUALIZAR -->
+
+  <button
+    class="actualizar"
+    type="button"
+    onclick="actualizarTodo()"
+  >
+    🔄 Actualizar
+  </button>
+
+
+  <!-- TURNOS DE HOY -->
+
+  <div class="card hoy">
+
+    <h2>📅 Turnos de hoy</h2>
+
+    <p
+      id="fechaHoy"
+      class="fecha-hoy"
+    ></p>
+
+    <div id="turnosHoy">
+
+      <p class="sin-turnos">
+        Cargando...
+      </p>
+
+    </div>
+
+  </div>
 
 
   <!-- BLOQUEAR HORARIO -->
@@ -227,7 +333,7 @@
   </div>
 
 
-  <!-- TURNOS -->
+  <!-- TURNOS DEL MES -->
 
   <div class="card">
 
@@ -274,12 +380,21 @@
 
 <script>
 
+
+/* =========================
+   SUPABASE
+========================= */
+
 const SUPABASE_URL =
   "https://tfwejlwycexmcgznxlao.supabase.co";
 
 const SUPABASE_KEY =
   "sb_publishable_RnheFzHcB78UTEaXBYOp9g_ZbktcycR";
 
+
+/* =========================
+   HORARIOS
+========================= */
 
 const horarios = [
   "14:40",
@@ -291,6 +406,10 @@ const horarios = [
   "20:40"
 ];
 
+
+/* =========================
+   VARIABLES
+========================= */
 
 let fechaActual = new Date();
 
@@ -310,6 +429,10 @@ const nombresMeses = [
   "diciembre"
 ];
 
+
+/* =========================
+   FORMATO FECHA
+========================= */
 
 function formatoFecha(fecha) {
 
@@ -331,16 +454,206 @@ function formatoFecha(fecha) {
 
 
 /* =========================
-   CARGAR TURNOS
+   FECHA DE HOY
+========================= */
+
+function mostrarFechaHoy() {
+
+  const hoy =
+    new Date();
+
+  const texto =
+    hoy.toLocaleDateString(
+      "es-AR",
+      {
+        weekday: "long",
+        day: "numeric",
+        month: "long"
+      }
+    );
+
+  document.getElementById(
+    "fechaHoy"
+  ).textContent = texto;
+}
+
+
+/* =========================
+   CARGAR TURNOS DE HOY
+========================= */
+
+async function cargarTurnosHoy() {
+
+  const contenedor =
+    document.getElementById(
+      "turnosHoy"
+    );
+
+  const hoy =
+    formatoFecha(
+      new Date()
+    );
+
+  contenedor.innerHTML =
+    '<p class="sin-turnos">Cargando...</p>';
+
+
+  try {
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/turnos" +
+      "?fecha=eq." +
+      hoy +
+      "&select=id,fecha,hora,nombre,telefono,estado" +
+      "&order=hora.asc";
+
+
+    const respuesta =
+      await fetch(
+        url,
+        {
+          method: "GET",
+
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization":
+              "Bearer " + SUPABASE_KEY
+          }
+        }
+      );
+
+
+    if (!respuesta.ok) {
+
+      throw new Error(
+        "Error Supabase"
+      );
+    }
+
+
+    const datos =
+      await respuesta.json();
+
+
+    const activos =
+      datos.filter(
+        function(turno) {
+
+          return turno.estado !==
+            "cancelado";
+
+        }
+      );
+
+
+    contenedor.innerHTML = "";
+
+
+    if (
+      activos.length === 0
+    ) {
+
+      contenedor.innerHTML =
+        '<p class="sin-turnos">' +
+        'No hay turnos para hoy.' +
+        '</p>';
+
+      return;
+    }
+
+
+    activos.forEach(
+      function(turno) {
+
+        const div =
+          document.createElement(
+            "div"
+          );
+
+        div.className =
+          "turno-hoy";
+
+
+        if (
+          turno.estado ===
+          "bloqueado"
+        ) {
+
+          div.innerHTML = `
+
+            <strong>
+              🕐 ${turno.hora}
+            </strong>
+
+            <p>
+              🚫 Horario bloqueado
+            </p>
+
+          `;
+
+        } else {
+
+          div.innerHTML = `
+
+            <strong>
+              🕐 ${turno.hora}
+            </strong>
+
+            <p>
+              👤 ${turno.nombre}
+            </p>
+
+            <p>
+              📱 ${turno.telefono}
+            </p>
+
+            <p>
+              Estado: ${turno.estado}
+            </p>
+
+          `;
+
+        }
+
+
+        contenedor.appendChild(
+          div
+        );
+
+      }
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    contenedor.innerHTML =
+      '<p class="error">' +
+      'No se pudieron cargar los turnos de hoy.' +
+      '</p>';
+
+  }
+
+}
+
+
+/* =========================
+   CARGAR TURNOS DEL MES
 ========================= */
 
 async function cargarTurnos() {
 
   const contenedor =
-    document.getElementById("turnos");
+    document.getElementById(
+      "turnos"
+    );
 
   const nombreMes =
-    document.getElementById("nombreMes");
+    document.getElementById(
+      "nombreMes"
+    );
 
 
   nombreMes.textContent =
@@ -364,13 +677,21 @@ async function cargarTurnos() {
 
   const primerDia =
     formatoFecha(
-      new Date(año, mes, 1)
+      new Date(
+        año,
+        mes,
+        1
+      )
     );
 
 
   const ultimoDia =
     formatoFecha(
-      new Date(año, mes + 1, 0)
+      new Date(
+        año,
+        mes + 1,
+        0
+      )
     );
 
 
@@ -402,17 +723,7 @@ async function cargarTurnos() {
       );
 
 
-    const texto =
-      await respuesta.text();
-
-
     if (!respuesta.ok) {
-
-      console.error(
-        "Error Supabase:",
-        respuesta.status,
-        texto
-      );
 
       throw new Error(
         "Error Supabase"
@@ -421,13 +732,15 @@ async function cargarTurnos() {
 
 
     const datos =
-      JSON.parse(texto);
+      await respuesta.json();
 
 
     contenedor.innerHTML = "";
 
 
-    if (datos.length === 0) {
+    if (
+      datos.length === 0
+    ) {
 
       contenedor.innerHTML =
         '<p class="vacio">' +
@@ -442,7 +755,9 @@ async function cargarTurnos() {
       function(turno) {
 
         const div =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         div.className =
           "turno";
@@ -457,12 +772,14 @@ async function cargarTurnos() {
         ) {
 
           boton = `
+
             <button
               class="desbloquear"
               onclick="desbloquearHorario(${turno.id})"
             >
               🔓 Desbloquear horario
             </button>
+
           `;
 
         } else if (
@@ -471,12 +788,14 @@ async function cargarTurnos() {
         ) {
 
           boton = `
+
             <button
               class="cancelar"
               onclick="cancelarTurno(${turno.id})"
             >
               ❌ Cancelar turno
             </button>
+
           `;
 
         }
@@ -490,13 +809,27 @@ async function cargarTurnos() {
           </strong>
 
           ${
-            turno.estado === "bloqueado"
+            turno.estado ===
+            "bloqueado"
+
             ? `
-              <p>🚫 Horario bloqueado</p>
+
+              <p>
+                🚫 Horario bloqueado
+              </p>
+
             `
+
             : `
-              <p>👤 ${turno.nombre}</p>
-              <p>📱 ${turno.telefono}</p>
+
+              <p>
+                👤 ${turno.nombre}
+              </p>
+
+              <p>
+                📱 ${turno.telefono}
+              </p>
+
             `
           }
 
@@ -509,7 +842,9 @@ async function cargarTurnos() {
         `;
 
 
-        contenedor.appendChild(div);
+        contenedor.appendChild(
+          div
+        );
 
       }
     );
@@ -525,6 +860,19 @@ async function cargarTurnos() {
       '</p>';
 
   }
+
+}
+
+
+/* =========================
+   ACTUALIZAR TODO
+========================= */
+
+function actualizarTodo() {
+
+  cargarTurnosHoy();
+
+  cargarTurnos();
 
 }
 
@@ -568,10 +916,9 @@ async function bloquearHorario() {
 
   try {
 
-    /* comprobar si ya existe */
-
     const comprobar =
       await fetch(
+
         SUPABASE_URL +
         "/rest/v1/turnos" +
         "?fecha=eq." +
@@ -579,6 +926,7 @@ async function bloquearHorario() {
         "&hora=eq." +
         encodeURIComponent(hora) +
         "&select=id,estado",
+
         {
           method: "GET",
 
@@ -588,6 +936,7 @@ async function bloquearHorario() {
               "Bearer " + SUPABASE_KEY
           }
         }
+
       );
 
 
@@ -618,16 +967,17 @@ async function bloquearHorario() {
     }
 
 
-    /* crear bloqueo */
-
     const respuesta =
       await fetch(
+
         SUPABASE_URL +
         "/rest/v1/turnos",
+
         {
           method: "POST",
 
           headers: {
+
             "Content-Type":
               "application/json",
 
@@ -640,6 +990,7 @@ async function bloquearHorario() {
 
             "Prefer":
               "return=minimal"
+
           },
 
           body: JSON.stringify({
@@ -658,20 +1009,18 @@ async function bloquearHorario() {
               "bloqueado"
 
           })
+
         }
+
       );
 
 
     if (!respuesta.ok) {
 
-      const texto =
-        await respuesta.text();
-
-      console.error(texto);
-
       throw new Error(
         "No se pudo bloquear"
       );
+
     }
 
 
@@ -682,8 +1031,7 @@ async function bloquearHorario() {
       "✅ Horario bloqueado correctamente.";
 
 
-    cargarTurnos();
-
+    actualizarTodo();
 
   } catch (error) {
 
@@ -721,13 +1069,17 @@ async function desbloquearHorario(id) {
 
     const respuesta =
       await fetch(
+
         SUPABASE_URL +
         "/rest/v1/turnos?id=eq." +
         id,
+
         {
+
           method: "PATCH",
 
           headers: {
+
             "Content-Type":
               "application/json",
 
@@ -740,13 +1092,18 @@ async function desbloquearHorario(id) {
 
             "Prefer":
               "return=minimal"
+
           },
 
           body: JSON.stringify({
+
             estado:
               "cancelado"
+
           })
+
         }
+
       );
 
 
@@ -755,10 +1112,11 @@ async function desbloquearHorario(id) {
       throw new Error(
         "No se pudo desbloquear"
       );
+
     }
 
 
-    cargarTurnos();
+    actualizarTodo();
 
 
   } catch (error) {
@@ -795,13 +1153,17 @@ async function cancelarTurno(id) {
 
     const respuesta =
       await fetch(
+
         SUPABASE_URL +
         "/rest/v1/turnos?id=eq." +
         id,
+
         {
+
           method: "PATCH",
 
           headers: {
+
             "Content-Type":
               "application/json",
 
@@ -814,13 +1176,18 @@ async function cancelarTurno(id) {
 
             "Prefer":
               "return=minimal"
+
           },
 
           body: JSON.stringify({
+
             estado:
               "cancelado"
+
           })
+
         }
+
       );
 
 
@@ -829,10 +1196,11 @@ async function cancelarTurno(id) {
       throw new Error(
         "No se pudo cancelar"
       );
+
     }
 
 
-    cargarTurnos();
+    actualizarTodo();
 
 
   } catch (error) {
@@ -849,13 +1217,14 @@ async function cancelarTurno(id) {
 
 
 /* =========================
-   CAMBIAR MES
+   MES ANTERIOR
 ========================= */
 
 function mesAnterior() {
 
   const hoy =
     new Date();
+
 
   const mesActual =
     new Date(
@@ -873,26 +1242,39 @@ function mesAnterior() {
     );
 
 
-  if (nuevoMes < mesActual) {
+  if (
+    nuevoMes < mesActual
+  ) {
+
     return;
+
   }
 
 
   fechaActual =
     nuevoMes;
 
+
   cargarTurnos();
 
 }
 
 
+/* =========================
+   MES SIGUIENTE
+========================= */
+
 function mesSiguiente() {
 
   fechaActual =
     new Date(
+
       fechaActual.getFullYear(),
+
       fechaActual.getMonth() + 1,
+
       1
+
     );
 
 
@@ -901,7 +1283,13 @@ function mesSiguiente() {
 }
 
 
-/* INICIAR */
+/* =========================
+   INICIAR
+========================= */
+
+mostrarFechaHoy();
+
+cargarTurnosHoy();
 
 cargarTurnos();
 

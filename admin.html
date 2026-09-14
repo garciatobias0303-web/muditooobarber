@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -29,13 +29,11 @@
     h1 {
       text-align: center;
       margin-bottom: 5px;
-      letter-spacing: 1px;
     }
 
     .subtitulo {
       text-align: center;
       color: #999;
-      margin-top: 0;
       margin-bottom: 25px;
     }
 
@@ -44,14 +42,53 @@
       padding: 20px;
       border-radius: 16px;
       margin-bottom: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.25);
     }
 
     h2 {
       margin-top: 0;
     }
 
-    /* BOTON ACTUALIZAR */
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 9px;
+      border: none;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #ccc;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .principal {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 9px;
+      background: white;
+      color: #111;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .cerrar {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 9px;
+      background: #444;
+      color: white;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
 
     .actualizar {
       width: 100%;
@@ -62,51 +99,64 @@
       color: #111;
       font-weight: bold;
       font-size: 16px;
-      cursor: pointer;
       margin-bottom: 20px;
     }
 
-    /* TURNOS DE HOY */
+    .error {
+      color: #ff6b6b;
+      text-align: center;
+    }
+
+    .exito {
+      color: #7CFF8A;
+      text-align: center;
+    }
+
+    .oculto {
+      display: none;
+    }
 
     .hoy {
       border: 1px solid #333;
     }
 
-    .turno-hoy {
+    .fecha-hoy {
+      color: #aaa;
+      text-align: center;
+    }
+
+    .turno-hoy,
+    .turno {
       background: #242424;
       padding: 15px;
       border-radius: 12px;
       margin-bottom: 10px;
     }
 
-    .turno-hoy:last-child {
-      margin-bottom: 0;
-    }
-
-    .turno-hoy strong {
+    .turno-hoy strong,
+    .turno strong {
       display: block;
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 8px;
     }
 
-    .turno-hoy p {
-      margin: 5px 0;
+    .turno-hoy p,
+    .turno p {
+      margin: 6px 0;
       color: #ccc;
     }
 
-    .sin-turnos {
+    .sin-turnos,
+    .vacio {
       color: #888;
       text-align: center;
       padding: 15px;
     }
 
-    /* MES */
-
     .mes {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
       margin-bottom: 20px;
     }
 
@@ -117,38 +167,15 @@
       padding: 10px 18px;
       border-radius: 9px;
       font-size: 22px;
-      cursor: pointer;
     }
 
     #nombreMes {
       font-size: 20px;
       font-weight: bold;
       text-transform: capitalize;
-      text-align: center;
-    }
-
-    /* TURNOS */
-
-    .turno {
-      background: #242424;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 10px;
-    }
-
-    .turno strong {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-
-    .turno p {
-      margin: 6px 0;
-      color: #ccc;
     }
 
     .cancelar,
-    .bloquear,
     .desbloquear {
       width: 100%;
       padding: 11px;
@@ -156,7 +183,6 @@
       border-radius: 9px;
       color: white;
       font-weight: bold;
-      cursor: pointer;
       margin-top: 10px;
       font-size: 15px;
     }
@@ -165,62 +191,8 @@
       background: #a90020;
     }
 
-    .bloquear {
-      background: #444;
-    }
-
     .desbloquear {
       background: #555;
-    }
-
-    /* FORMULARIO */
-
-    label {
-      display: block;
-      margin-top: 12px;
-      margin-bottom: 6px;
-      color: #ccc;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 9px;
-      border: none;
-      font-size: 16px;
-    }
-
-    .guardar {
-      width: 100%;
-      margin-top: 15px;
-      padding: 13px;
-      border: none;
-      border-radius: 9px;
-      background: white;
-      color: #111;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .mensaje {
-      text-align: center;
-      margin-top: 12px;
-    }
-
-    .error {
-      color: #ff6b6b;
-    }
-
-    .exito {
-      color: #7CFF8A;
-    }
-
-    .vacio {
-      text-align: center;
-      color: #888;
-      padding: 20px;
     }
 
     .volver {
@@ -231,20 +203,75 @@
       margin-top: 20px;
     }
 
-    .fecha-hoy {
-      color: #aaa;
-      text-align: center;
-      margin-top: -10px;
-      margin-bottom: 20px;
-    }
-
   </style>
 </head>
 
-
 <body>
 
-<div class="container">
+<!-- =========================
+     LOGIN
+========================= -->
+
+<div
+  id="login"
+  class="container"
+>
+
+  <div class="card">
+
+    <h1>MUDITOOO BARBER</h1>
+
+    <p class="subtitulo">
+      🔐 Acceso al administrador
+    </p>
+
+    <label for="email">
+      Gmail
+    </label>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Tu Gmail"
+      autocomplete="email"
+    >
+
+    <label for="password">
+      Contraseña
+    </label>
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Tu contraseña"
+      autocomplete="current-password"
+    >
+
+    <button
+      class="principal"
+      onclick="iniciarSesion()"
+    >
+      🔐 Ingresar
+    </button>
+
+    <p
+      id="mensajeLogin"
+      class="error"
+    ></p>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     ADMIN
+========================= -->
+
+<div
+  id="admin"
+  class="container oculto"
+>
 
   <h1>MUDITOOO BARBER</h1>
 
@@ -252,12 +279,18 @@
     📅 Panel de administrador
   </p>
 
+  <button
+    class="cerrar"
+    onclick="cerrarSesion()"
+  >
+    🚪 Cerrar sesión
+  </button>
+
 
   <!-- ACTUALIZAR -->
 
   <button
     class="actualizar"
-    type="button"
     onclick="actualizarTodo()"
   >
     🔄 Actualizar
@@ -318,8 +351,7 @@
     </select>
 
     <button
-      class="guardar"
-      type="button"
+      class="principal"
       onclick="bloquearHorario()"
     >
       🚫 Bloquear horario
@@ -327,7 +359,7 @@
 
     <p
       id="mensajeBloqueo"
-      class="mensaje"
+      class="exito"
     ></p>
 
   </div>
@@ -340,7 +372,6 @@
     <div class="mes">
 
       <button
-        type="button"
         onclick="mesAnterior()"
       >
         ‹
@@ -349,7 +380,6 @@
       <span id="nombreMes"></span>
 
       <button
-        type="button"
         onclick="mesSiguiente()"
       >
         ›
@@ -378,8 +408,9 @@
 </div>
 
 
-<script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
 
 /* =========================
    SUPABASE
@@ -390,6 +421,12 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
   "sb_publishable_RnheFzHcB78UTEaXBYOp9g_ZbktcycR";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
 /* =========================
@@ -407,11 +444,8 @@ const horarios = [
 ];
 
 
-/* =========================
-   VARIABLES
-========================= */
-
-let fechaActual = new Date();
+let fechaActual =
+  new Date();
 
 
 const nombresMeses = [
@@ -428,6 +462,135 @@ const nombresMeses = [
   "noviembre",
   "diciembre"
 ];
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function iniciarSesion() {
+
+  const email =
+    document.getElementById(
+      "email"
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      "password"
+    ).value;
+
+  const mensaje =
+    document.getElementById(
+      "mensajeLogin"
+    );
+
+  mensaje.textContent = "";
+
+
+  if (!email || !password) {
+
+    mensaje.textContent =
+      "Completá Gmail y contraseña.";
+
+    return;
+  }
+
+
+  const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+
+  if (error) {
+
+    console.error(error);
+
+    mensaje.textContent =
+      "Gmail o contraseña incorrectos.";
+
+    return;
+  }
+
+
+  mostrarAdmin();
+
+}
+
+
+/* =========================
+   MOSTRAR ADMIN
+========================= */
+
+function mostrarAdmin() {
+
+  document.getElementById(
+    "login"
+  ).classList.add("oculto");
+
+  document.getElementById(
+    "admin"
+  ).classList.remove("oculto");
+
+  mostrarFechaHoy();
+
+  actualizarTodo();
+
+}
+
+
+/* =========================
+   CERRAR SESIÓN
+========================= */
+
+async function cerrarSesion() {
+
+  await supabaseClient.auth.signOut();
+
+  document.getElementById(
+    "admin"
+  ).classList.add("oculto");
+
+  document.getElementById(
+    "login"
+  ).classList.remove("oculto");
+
+  document.getElementById(
+    "password"
+  ).value = "";
+
+}
+
+
+/* =========================
+   COMPROBAR SESIÓN
+========================= */
+
+async function comprobarSesion() {
+
+  const {
+    data
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if (
+    data.session
+  ) {
+
+    mostrarAdmin();
+
+  } else {
+
+    document.getElementById(
+      "login"
+    ).classList.remove("oculto");
+
+  }
+
+}
 
 
 /* =========================
@@ -454,7 +617,7 @@ function formatoFecha(fecha) {
 
 
 /* =========================
-   FECHA DE HOY
+   FECHA HOY
 ========================= */
 
 function mostrarFechaHoy() {
@@ -475,11 +638,12 @@ function mostrarFechaHoy() {
   document.getElementById(
     "fechaHoy"
   ).textContent = texto;
+
 }
 
 
 /* =========================
-   CARGAR TURNOS DE HOY
+   CARGAR TURNOS HOY
 ========================= */
 
 async function cargarTurnosHoy() {
@@ -494,50 +658,32 @@ async function cargarTurnosHoy() {
       new Date()
     );
 
+
   contenedor.innerHTML =
     '<p class="sin-turnos">Cargando...</p>';
 
 
   try {
 
-    const url =
-      SUPABASE_URL +
-      "/rest/v1/turnos" +
-      "?fecha=eq." +
-      hoy +
-      "&select=id,fecha,hora,nombre,telefono,estado" +
-      "&order=hora.asc";
+    const { data, error } =
+      await supabaseClient
+        .from("turnos")
+        .select(
+          "id,fecha,hora,nombre,telefono,estado"
+        )
+        .eq("fecha", hoy)
+        .order("hora", {
+          ascending: true
+        });
 
 
-    const respuesta =
-      await fetch(
-        url,
-        {
-          method: "GET",
-
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-          }
-        }
-      );
-
-
-    if (!respuesta.ok) {
-
-      throw new Error(
-        "Error Supabase"
-      );
+    if (error) {
+      throw error;
     }
 
 
-    const datos =
-      await respuesta.json();
-
-
     const activos =
-      datos.filter(
+      data.filter(
         function(turno) {
 
           return turno.estado !==
@@ -631,7 +777,7 @@ async function cargarTurnosHoy() {
 
     contenedor.innerHTML =
       '<p class="error">' +
-      'No se pudieron cargar los turnos de hoy.' +
+      'No se pudieron cargar los turnos.' +
       '</p>';
 
   }
@@ -697,49 +843,32 @@ async function cargarTurnos() {
 
   try {
 
-    const url =
-      SUPABASE_URL +
-      "/rest/v1/turnos" +
-      "?fecha=gte." +
-      primerDia +
-      "&fecha=lte." +
-      ultimoDia +
-      "&select=id,fecha,hora,nombre,telefono,estado" +
-      "&order=fecha.asc,hora.asc";
+    const { data, error } =
+      await supabaseClient
+        .from("turnos")
+        .select(
+          "id,fecha,hora,nombre,telefono,estado"
+        )
+        .gte("fecha", primerDia)
+        .lte("fecha", ultimoDia)
+        .order("fecha", {
+          ascending: true
+        })
+        .order("hora", {
+          ascending: true
+        });
 
 
-    const respuesta =
-      await fetch(
-        url,
-        {
-          method: "GET",
-
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-          }
-        }
-      );
-
-
-    if (!respuesta.ok) {
-
-      throw new Error(
-        "Error Supabase"
-      );
+    if (error) {
+      throw error;
     }
-
-
-    const datos =
-      await respuesta.json();
 
 
     contenedor.innerHTML = "";
 
 
     if (
-      datos.length === 0
+      data.length === 0
     ) {
 
       contenedor.innerHTML =
@@ -751,7 +880,7 @@ async function cargarTurnos() {
     }
 
 
-    datos.forEach(
+    data.forEach(
       function(turno) {
 
         const div =
@@ -809,19 +938,15 @@ async function cargarTurnos() {
           </strong>
 
           ${
-            turno.estado ===
-            "bloqueado"
+            turno.estado === "bloqueado"
 
             ? `
-
               <p>
                 🚫 Horario bloqueado
               </p>
-
             `
 
             : `
-
               <p>
                 👤 ${turno.nombre}
               </p>
@@ -829,7 +954,6 @@ async function cargarTurnos() {
               <p>
                 📱 ${turno.telefono}
               </p>
-
             `
           }
 
@@ -865,7 +989,7 @@ async function cargarTurnos() {
 
 
 /* =========================
-   ACTUALIZAR TODO
+   ACTUALIZAR
 ========================= */
 
 function actualizarTodo() {
@@ -905,7 +1029,7 @@ async function bloquearHorario() {
   if (!fecha) {
 
     mensaje.className =
-      "mensaje error";
+      "error";
 
     mensaje.textContent =
       "Elegí una fecha.";
@@ -916,32 +1040,22 @@ async function bloquearHorario() {
 
   try {
 
-    const comprobar =
-      await fetch(
-
-        SUPABASE_URL +
-        "/rest/v1/turnos" +
-        "?fecha=eq." +
-        fecha +
-        "&hora=eq." +
-        encodeURIComponent(hora) +
-        "&select=id,estado",
-
-        {
-          method: "GET",
-
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-          }
-        }
-
-      );
+    const {
+      data: existentes,
+      error: errorBusqueda
+    } =
+      await supabaseClient
+        .from("turnos")
+        .select(
+          "id,estado"
+        )
+        .eq("fecha", fecha)
+        .eq("hora", hora);
 
 
-    const existentes =
-      await comprobar.json();
+    if (errorBusqueda) {
+      throw errorBusqueda;
+    }
 
 
     const ocupado =
@@ -958,7 +1072,7 @@ async function bloquearHorario() {
     if (ocupado) {
 
       mensaje.className =
-        "mensaje error";
+        "error";
 
       mensaje.textContent =
         "Ese horario ya está ocupado.";
@@ -967,65 +1081,36 @@ async function bloquearHorario() {
     }
 
 
-    const respuesta =
-      await fetch(
+    const {
+      error: errorInsertar
+    } =
+      await supabaseClient
+        .from("turnos")
+        .insert({
 
-        SUPABASE_URL +
-        "/rest/v1/turnos",
+          fecha: fecha,
 
-        {
-          method: "POST",
+          hora: hora,
 
-          headers: {
+          nombre:
+            "Horario bloqueado",
 
-            "Content-Type":
-              "application/json",
+          telefono:
+            "",
 
-            "apikey":
-              SUPABASE_KEY,
+          estado:
+            "bloqueado"
 
-            "Authorization":
-              "Bearer " +
-              SUPABASE_KEY,
-
-            "Prefer":
-              "return=minimal"
-
-          },
-
-          body: JSON.stringify({
-
-            fecha: fecha,
-
-            hora: hora,
-
-            nombre:
-              "Horario bloqueado",
-
-            telefono:
-              "",
-
-            estado:
-              "bloqueado"
-
-          })
-
-        }
-
-      );
+        });
 
 
-    if (!respuesta.ok) {
-
-      throw new Error(
-        "No se pudo bloquear"
-      );
-
+    if (errorInsertar) {
+      throw errorInsertar;
     }
 
 
     mensaje.className =
-      "mensaje exito";
+      "exito";
 
     mensaje.textContent =
       "✅ Horario bloqueado correctamente.";
@@ -1033,12 +1118,13 @@ async function bloquearHorario() {
 
     actualizarTodo();
 
+
   } catch (error) {
 
     console.error(error);
 
     mensaje.className =
-      "mensaje error";
+      "error";
 
     mensaje.textContent =
       "No se pudo bloquear el horario.";
@@ -1054,65 +1140,31 @@ async function bloquearHorario() {
 
 async function desbloquearHorario(id) {
 
-  const confirmar =
-    confirm(
+  if (
+    !confirm(
       "¿Querés desbloquear este horario?"
-    );
-
-
-  if (!confirmar) {
+    )
+  ) {
     return;
   }
 
 
   try {
 
-    const respuesta =
-      await fetch(
-
-        SUPABASE_URL +
-        "/rest/v1/turnos?id=eq." +
-        id,
-
-        {
-
-          method: "PATCH",
-
-          headers: {
-
-            "Content-Type":
-              "application/json",
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " +
-              SUPABASE_KEY,
-
-            "Prefer":
-              "return=minimal"
-
-          },
-
-          body: JSON.stringify({
-
-            estado:
-              "cancelado"
-
-          })
-
-        }
-
-      );
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("turnos")
+        .update({
+          estado:
+            "cancelado"
+        })
+        .eq("id", id);
 
 
-    if (!respuesta.ok) {
-
-      throw new Error(
-        "No se pudo desbloquear"
-      );
-
+    if (error) {
+      throw error;
     }
 
 
@@ -1138,65 +1190,31 @@ async function desbloquearHorario(id) {
 
 async function cancelarTurno(id) {
 
-  const confirmar =
-    confirm(
+  if (
+    !confirm(
       "¿Seguro que querés cancelar este turno?"
-    );
-
-
-  if (!confirmar) {
+    )
+  ) {
     return;
   }
 
 
   try {
 
-    const respuesta =
-      await fetch(
-
-        SUPABASE_URL +
-        "/rest/v1/turnos?id=eq." +
-        id,
-
-        {
-
-          method: "PATCH",
-
-          headers: {
-
-            "Content-Type":
-              "application/json",
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " +
-              SUPABASE_KEY,
-
-            "Prefer":
-              "return=minimal"
-
-          },
-
-          body: JSON.stringify({
-
-            estado:
-              "cancelado"
-
-          })
-
-        }
-
-      );
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("turnos")
+        .update({
+          estado:
+            "cancelado"
+        })
+        .eq("id", id);
 
 
-    if (!respuesta.ok) {
-
-      throw new Error(
-        "No se pudo cancelar"
-      );
-
+    if (error) {
+      throw error;
     }
 
 
@@ -1217,14 +1235,13 @@ async function cancelarTurno(id) {
 
 
 /* =========================
-   MES ANTERIOR
+   CAMBIAR MES
 ========================= */
 
 function mesAnterior() {
 
   const hoy =
     new Date();
-
 
   const mesActual =
     new Date(
@@ -1245,38 +1262,26 @@ function mesAnterior() {
   if (
     nuevoMes < mesActual
   ) {
-
     return;
-
   }
 
 
   fechaActual =
     nuevoMes;
 
-
   cargarTurnos();
 
 }
 
 
-/* =========================
-   MES SIGUIENTE
-========================= */
-
 function mesSiguiente() {
 
   fechaActual =
     new Date(
-
       fechaActual.getFullYear(),
-
       fechaActual.getMonth() + 1,
-
       1
-
     );
-
 
   cargarTurnos();
 
@@ -1287,11 +1292,7 @@ function mesSiguiente() {
    INICIAR
 ========================= */
 
-mostrarFechaHoy();
-
-cargarTurnosHoy();
-
-cargarTurnos();
+comprobarSesion();
 
 </script>
 

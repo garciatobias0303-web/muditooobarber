@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reservar turno - Muditooo Barber</title>
+  <title>Reservar turno - MUDITOOO BARBER</title>
 
   <style>
     * {
@@ -64,7 +64,7 @@
       border-radius: 8px;
       padding: 10px 15px;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 20px;
     }
 
     #nombreMes {
@@ -101,8 +101,12 @@
       font-size: 15px;
     }
 
-    .dia:hover {
+    .dia:hover:not(:disabled) {
       background: #444;
+    }
+
+    .dia:disabled {
+      cursor: not-allowed;
     }
 
     .dia.vacio {
@@ -112,7 +116,6 @@
 
     .dia.domingo {
       color: #555;
-      cursor: not-allowed;
     }
 
     .dia.seleccionado {
@@ -129,6 +132,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
+      margin-top: 15px;
     }
 
     .hora {
@@ -141,7 +145,7 @@
       font-size: 16px;
     }
 
-    .hora:hover {
+    .hora:hover:not(:disabled) {
       background: #444;
     }
 
@@ -155,6 +159,7 @@
     .hora.seleccionada {
       background: white;
       color: black;
+      font-weight: bold;
     }
 
     .mensaje {
@@ -253,9 +258,11 @@
     <h2>📅 Reservar turno</h2>
 
     <div class="mes">
-      <button onclick="mesAnterior()">‹</button>
+      <button type="button" onclick="mesAnterior()">‹</button>
+
       <span id="nombreMes"></span>
-      <button onclick="mesSiguiente()">›</button>
+
+      <button type="button" onclick="mesSiguiente()">›</button>
     </div>
 
     <div class="dias">
@@ -271,7 +278,7 @@
     <div id="calendario" class="calendario"></div>
 
     <p id="mensaje" class="mensaje">
-      Seleccioná un día para ver los horarios disponibles.
+      Seleccioná un día para ver los horarios.
     </p>
 
     <div id="horarios" class="horarios"></div>
@@ -282,15 +289,18 @@
         type="text"
         id="nombre"
         placeholder="Tu nombre"
+        autocomplete="name"
       >
 
       <input
         type="tel"
         id="telefono"
         placeholder="Tu teléfono"
+        autocomplete="tel"
       >
 
       <button
+        type="button"
         id="botonConfirmar"
         class="confirmar"
         onclick="reservarTurno()"
@@ -318,12 +328,11 @@
 
 </div>
 
-
 <script>
 
-  // ==========================================
+  // ==============================
   // SUPABASE
-  // ==========================================
+  // ==============================
 
   const SUPABASE_URL =
     "https://tfwejlwycexmcgznxlao.supabase.co";
@@ -332,9 +341,9 @@
     sb_publishable_RnheFzHcB78UTEaXBYOp9g_ZbktcycR
 
 
-  // ==========================================
+  // ==============================
   // HORARIOS
-  // ==========================================
+  // ==============================
 
   const horarios = [
     "14:40",
@@ -347,9 +356,9 @@
   ];
 
 
-  // ==========================================
+  // ==============================
   // VARIABLES
-  // ==========================================
+  // ==============================
 
   let fechaActual = new Date();
 
@@ -374,26 +383,26 @@
   ];
 
 
-  // ==========================================
+  // ==============================
   // FECHA DE HOY
-  // ==========================================
+  // ==============================
 
   function fechaHoy() {
 
-    const hoy = new Date();
+    const ahora = new Date();
 
     return new Date(
-      hoy.getFullYear(),
-      hoy.getMonth(),
-      hoy.getDate()
+      ahora.getFullYear(),
+      ahora.getMonth(),
+      ahora.getDate()
     );
 
   }
 
 
-  // ==========================================
+  // ==============================
   // FORMATO FECHA
-  // ==========================================
+  // ==============================
 
   function formatoFecha(fecha) {
 
@@ -412,9 +421,9 @@
   }
 
 
-  // ==========================================
+  // ==============================
   // MOSTRAR CALENDARIO
-  // ==========================================
+  // ==============================
 
   function mostrarCalendario() {
 
@@ -427,7 +436,9 @@
     calendario.innerHTML = "";
 
     nombreMes.textContent =
-      `${nombresMeses[fechaActual.getMonth()]} ${fechaActual.getFullYear()}`;
+      nombresMeses[fechaActual.getMonth()]
+      + " "
+      + fechaActual.getFullYear();
 
 
     const año =
@@ -443,24 +454,35 @@
     let diaSemana =
       primerDia.getDay();
 
-    // Convertir domingo=0 a lunes=0
+
+    // Domingo = 6
+    // Lunes = 0
+
     diaSemana =
-      diaSemana === 0 ? 6 : diaSemana - 1;
+      diaSemana === 0
+        ? 6
+        : diaSemana - 1;
 
 
     const cantidadDias =
       new Date(año, mes + 1, 0).getDate();
 
 
-    // Espacios vacíos
-    for (let i = 0; i < diaSemana; i++) {
+    // Espacios antes del primer día
 
-      const vacio =
+    for (
+      let i = 0;
+      i < diaSemana;
+      i++
+    ) {
+
+      const espacio =
         document.createElement("div");
 
-      vacio.className = "dia vacio";
+      espacio.className =
+        "dia vacio";
 
-      calendario.appendChild(vacio);
+      calendario.appendChild(espacio);
 
     }
 
@@ -468,13 +490,22 @@
     const hoy = fechaHoy();
 
 
-    for (let dia = 1; dia <= cantidadDias; dia++) {
+    // Crear días
+
+    for (
+      let dia = 1;
+      dia <= cantidadDias;
+      dia++
+    ) {
 
       const fecha =
         new Date(año, mes, dia);
 
+
       const boton =
         document.createElement("button");
+
+      boton.type = "button";
 
       boton.className = "dia";
 
@@ -482,6 +513,7 @@
 
 
       // Domingo
+
       if (fecha.getDay() === 0) {
 
         boton.classList.add("domingo");
@@ -492,20 +524,21 @@
 
 
       // Días anteriores
+
       if (fecha < hoy) {
 
         boton.disabled = true;
 
         boton.style.opacity = "0.35";
 
-        boton.style.cursor = "not-allowed";
-
       }
 
 
       // Hoy
+
       if (
-        fecha.getTime() === hoy.getTime()
+        fecha.getTime() ===
+        hoy.getTime()
       ) {
 
         boton.classList.add("hoy");
@@ -513,17 +546,22 @@
       }
 
 
-      // Seleccionado
+      // Día seleccionado
+
       if (
         fechaSeleccionada &&
         formatoFecha(fecha) ===
         formatoFecha(fechaSeleccionada)
       ) {
 
-        boton.classList.add("seleccionado");
+        boton.classList.add(
+          "seleccionado"
+        );
 
       }
 
+
+      // Click
 
       if (
         fecha >= hoy &&
@@ -546,9 +584,9 @@
   }
 
 
-  // ==========================================
+  // ==============================
   // SELECCIONAR FECHA
-  // ==========================================
+  // ==============================
 
   async function seleccionarFecha(fecha) {
 
@@ -556,23 +594,29 @@
 
     horaSeleccionada = null;
 
+
     mostrarCalendario();
 
-    document.getElementById("formulario")
+
+    document
+      .getElementById("formulario")
       .classList.remove("mostrar");
 
-    document.getElementById("mensaje")
+
+    document
+      .getElementById("mensaje")
       .textContent =
       "Cargando horarios...";
+
 
     await mostrarHorarios();
 
   }
 
 
-  // ==========================================
+  // ==============================
   // MOSTRAR HORARIOS
-  // ==========================================
+  // ==============================
 
   async function mostrarHorarios() {
 
@@ -580,6 +624,7 @@
       document.getElementById("horarios");
 
     contenedor.innerHTML = "";
+
 
     if (!fechaSeleccionada) {
 
@@ -597,22 +642,28 @@
 
     try {
 
-      const respuesta = await fetch(
-        `${SUPABASE_URL}/rest/v1/turnos?fecha=eq.${fecha}&select=hora,estado`,
-        {
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization":
-              `Bearer ${SUPABASE_KEY}`
+      const respuesta =
+        await fetch(
+          SUPABASE_URL +
+          "/rest/v1/turnos?fecha=eq." +
+          fecha +
+          "&select=hora,estado",
+          {
+            method: "GET",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization":
+                "Bearer " + SUPABASE_KEY
+            }
           }
-        }
-      );
+        );
 
 
       if (!respuesta.ok) {
 
         throw new Error(
-          "No se pudieron cargar los turnos"
+          "Error al consultar Supabase"
         );
 
       }
@@ -624,56 +675,69 @@
 
       ocupados =
         datos
-          .filter(turno =>
-            turno.estado !== "cancelado"
-          )
-          .map(turno =>
-            turno.hora
-          );
+          .filter(function(turno) {
+
+            return turno.estado !== "cancelado";
+
+          })
+          .map(function(turno) {
+
+            return turno.hora;
+
+          });
 
 
     } catch (error) {
 
-      document.getElementById("mensaje")
+      console.error(error);
+
+      document
+        .getElementById("mensaje")
         .textContent =
         "No se pudieron cargar los horarios.";
-
-      console.error(error);
 
       return;
 
     }
 
 
-    document.getElementById("mensaje")
+    document
+      .getElementById("mensaje")
       .textContent =
       "Elegí un horario disponible:";
 
 
-    horarios.forEach(hora => {
+    horarios.forEach(function(hora) {
 
       const boton =
         document.createElement("button");
+
+      boton.type = "button";
 
       boton.className = "hora";
 
       boton.textContent = hora;
 
 
-      if (ocupados.includes(hora)) {
+      if (
+        ocupados.includes(hora)
+      ) {
 
         boton.classList.add("ocupado");
 
         boton.disabled = true;
 
         boton.textContent =
-          `${hora} - Ocupado`;
+          hora + " - Ocupado";
 
       } else {
 
         boton.onclick = function() {
 
-          seleccionarHora(hora);
+          seleccionarHora(
+            hora,
+            boton
+          );
 
         };
 
@@ -687,18 +751,21 @@
   }
 
 
-  // ==========================================
+  // ==============================
   // SELECCIONAR HORA
-  // ==========================================
+  // ==============================
 
-  function seleccionarHora(hora) {
+  function seleccionarHora(
+    hora,
+    botonSeleccionado
+  ) {
 
     horaSeleccionada = hora;
 
 
     document
       .querySelectorAll(".hora")
-      .forEach(boton => {
+      .forEach(function(boton) {
 
         boton.classList.remove(
           "seleccionada"
@@ -707,46 +774,42 @@
       });
 
 
-    const botones =
-      document.querySelectorAll(".hora");
+    botonSeleccionado.classList.add(
+      "seleccionada"
+    );
 
 
-    botones.forEach(boton => {
-
-      if (boton.textContent === hora) {
-
-        boton.classList.add(
-          "seleccionada"
-        );
-
-      }
-
-    });
-
-
-    document.getElementById("formulario")
+    document
+      .getElementById("formulario")
       .classList.add("mostrar");
 
 
-    document.getElementById("error")
+    document
+      .getElementById("error")
       .textContent = "";
 
   }
 
 
-  // ==========================================
+  // ==============================
   // RESERVAR TURNO
-  // ==========================================
+  // ==============================
 
   async function reservarTurno() {
 
     const nombre =
-      document.getElementById("nombre")
-        .value.trim();
+      document
+        .getElementById("nombre")
+        .value
+        .trim();
+
 
     const telefono =
-      document.getElementById("telefono")
-        .value.trim();
+      document
+        .getElementById("telefono")
+        .value
+        .trim();
+
 
     const error =
       document.getElementById("error");
@@ -755,7 +818,10 @@
     error.textContent = "";
 
 
-    if (!fechaSeleccionada || !horaSeleccionada) {
+    if (
+      !fechaSeleccionada ||
+      !horaSeleccionada
+    ) {
 
       error.textContent =
         "Elegí una fecha y un horario.";
@@ -798,41 +864,65 @@
 
 
     const fecha =
-      formatoFecha(fechaSeleccionada);
+      formatoFecha(
+        fechaSeleccionada
+      );
 
 
     try {
 
-      // Verificar nuevamente que el horario siga libre
+      // Verificar nuevamente
 
       const comprobar =
         await fetch(
-          `${SUPABASE_URL}/rest/v1/turnos?fecha=eq.${fecha}&hora=eq.${horaSeleccionada}&select=id,estado`,
+          SUPABASE_URL +
+          "/rest/v1/turnos?fecha=eq." +
+          fecha +
+          "&hora=eq." +
+          encodeURIComponent(
+            horaSeleccionada
+          ) +
+          "&select=id,estado",
           {
+            method: "GET",
+
             headers: {
               "apikey": SUPABASE_KEY,
               "Authorization":
-                `Bearer ${SUPABASE_KEY}`
+                "Bearer " + SUPABASE_KEY
             }
           }
         );
 
 
-      const turnosExistentes =
+      if (!comprobar.ok) {
+
+        throw new Error(
+          "No se pudo comprobar el horario"
+        );
+
+      }
+
+
+      const existentes =
         await comprobar.json();
 
 
       const ocupado =
-        turnosExistentes.some(
-          turno =>
-            turno.estado !== "cancelado"
+        existentes.some(
+          function(turno) {
+
+            return turno.estado !==
+              "cancelado";
+
+          }
         );
 
 
       if (ocupado) {
 
         error.textContent =
-          "Ese horario acaba de ser ocupado. Elegí otro.";
+          "Ese horario ya fue ocupado. Elegí otro.";
 
         await mostrarHorarios();
 
@@ -846,15 +936,17 @@
       }
 
 
-      // Guardar reserva
+      // Guardar
 
       const respuesta =
         await fetch(
-          `${SUPABASE_URL}/rest/v1/turnos`,
+          SUPABASE_URL +
+          "/rest/v1/turnos",
           {
             method: "POST",
 
             headers: {
+
               "Content-Type":
                 "application/json",
 
@@ -862,19 +954,31 @@
                 SUPABASE_KEY,
 
               "Authorization":
-                `Bearer ${SUPABASE_KEY}`,
+                "Bearer " + SUPABASE_KEY,
 
               "Prefer":
                 "return=minimal"
+
             },
 
             body: JSON.stringify({
+
               fecha: fecha,
-              hora: horaSeleccionada,
-              nombre: nombre,
-              telefono: telefono,
-              estado: "confirmado"
+
+              hora:
+                horaSeleccionada,
+
+              nombre:
+                nombre,
+
+              telefono:
+                telefono,
+
+              estado:
+                "confirmado"
+
             })
+
           }
         );
 
@@ -895,22 +999,29 @@
 
       // Mostrar éxito
 
-      document.getElementById("detalleTurno")
+      document
+        .getElementById("detalleTurno")
         .textContent =
-        `Tu turno quedó reservado para el ${fecha} a las ${horaSeleccionada}.`;
+        "Tu turno quedó reservado para el " +
+        fecha +
+        " a las " +
+        horaSeleccionada +
+        ".";
 
 
-      document.getElementById("exito")
+      document
+        .getElementById("exito")
         .classList.add("mostrar");
 
 
-      document.querySelector(".card")
+      document
+        .querySelector(".card")
         .style.display = "none";
 
 
-    } catch (e) {
+    } catch (errorReserva) {
 
-      console.error(e);
+      console.error(errorReserva);
 
       error.textContent =
         "Hubo un error al reservar. Intentá nuevamente.";
@@ -925,29 +1036,28 @@
   }
 
 
-  // ==========================================
+  // ==============================
   // MES ANTERIOR
-  // ==========================================
+  // ==============================
 
   function mesAnterior() {
 
     const hoy =
       fechaHoy();
 
-    const nuevoMes =
-      new Date(
-        fechaActual.getFullYear(),
-        fechaActual.getMonth() - 1,
-        1
-      );
-
-
-    // No permitir meses anteriores al actual
 
     const mesActual =
       new Date(
         hoy.getFullYear(),
         hoy.getMonth(),
+        1
+      );
+
+
+    const nuevoMes =
+      new Date(
+        fechaActual.getFullYear(),
+        fechaActual.getMonth() - 1,
         1
       );
 
@@ -959,16 +1069,18 @@
     }
 
 
-    fechaActual = nuevoMes;
+    fechaActual =
+      nuevoMes;
+
 
     mostrarCalendario();
 
   }
 
 
-  // ==========================================
+  // ==============================
   // MES SIGUIENTE
-  // ==========================================
+  // ==============================
 
   function mesSiguiente() {
 
@@ -979,14 +1091,15 @@
         1
       );
 
+
     mostrarCalendario();
 
   }
 
 
-  // ==========================================
-  // INICIAR
-  // ==========================================
+  // ==============================
+  // INICIAR CALENDARIO
+  // ==============================
 
   mostrarCalendario();
 

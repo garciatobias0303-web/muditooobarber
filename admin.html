@@ -8,7 +8,6 @@
   <title>MUDITOOO BARBER - Admin</title>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -21,7 +20,7 @@
     }
 
     .container {
-      max-width: 850px;
+      max-width: 900px;
       margin: auto;
       padding: 20px 15px 40px;
     }
@@ -48,123 +47,46 @@
       margin-top: 0;
     }
 
-    input,
-    select {
-      width: 100%;
-      padding: 13px;
-      border-radius: 9px;
-      border: none;
-      font-size: 16px;
-      margin-bottom: 12px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      color: #ccc;
-    }
-
     button {
       cursor: pointer;
     }
 
-    .principal {
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 9px;
-      background: white;
-      color: #111;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .cerrar {
-      width: 100%;
-      padding: 11px;
-      border: none;
-      border-radius: 9px;
-      background: #444;
-      color: white;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-
+    .cerrar,
     .actualizar {
       width: 100%;
       padding: 13px;
       border: none;
       border-radius: 10px;
-      background: white;
-      color: #111;
       font-weight: bold;
       font-size: 16px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
-    .error {
-      color: #ff6b6b;
-      text-align: center;
+    .cerrar {
+      background: #333;
+      color: white;
     }
 
-    .exito {
-      color: #7CFF8A;
-      text-align: center;
+    .actualizar {
+      background: white;
+      color: #111;
     }
 
-    .oculto {
-      display: none;
-    }
-
-    .hoy {
-      border: 1px solid #333;
-    }
-
-    .fecha-hoy {
-      color: #aaa;
-      text-align: center;
-    }
-
-    .turno-hoy,
-    .turno {
-      background: #242424;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 10px;
-    }
-
-    .turno-hoy strong,
-    .turno strong {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-
-    .turno-hoy p,
-    .turno p {
-      margin: 6px 0;
-      color: #ccc;
-    }
-
-    .sin-turnos,
-    .vacio {
-      color: #888;
-      text-align: center;
-      padding: 15px;
-    }
+    /* CALENDARIO */
 
     .mes {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      gap: 10px;
     }
 
     .mes button {
       background: #333;
       color: white;
       border: none;
-      padding: 10px 18px;
+      padding: 10px 17px;
       border-radius: 9px;
       font-size: 22px;
     }
@@ -173,6 +95,102 @@
       font-size: 20px;
       font-weight: bold;
       text-transform: capitalize;
+      text-align: center;
+    }
+
+    .dias-semana,
+    .calendario {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .dia-semana {
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+      font-weight: bold;
+      padding-bottom: 5px;
+    }
+
+    .dia {
+      min-height: 65px;
+      background: #242424;
+      border: 1px solid #303030;
+      border-radius: 9px;
+      color: white;
+      padding: 8px 5px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .dia:hover {
+      background: #333;
+    }
+
+    .dia.vacio {
+      background: transparent;
+      border: none;
+    }
+
+    .dia.hoy {
+      border: 2px solid white;
+    }
+
+    .dia.seleccionado {
+      background: #444;
+      border: 2px solid white;
+    }
+
+    .dia.domingo {
+      opacity: 0.35;
+    }
+
+    .numero-dia {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .indicador {
+      margin-top: 7px;
+      font-size: 11px;
+      color: #bbb;
+    }
+
+    /* TURNOS DEL DÍA */
+
+    .fecha-seleccionada {
+      text-align: center;
+      color: #aaa;
+      margin-top: -8px;
+      margin-bottom: 20px;
+      text-transform: capitalize;
+    }
+
+    .turno {
+      background: #242424;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .turno strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .turno p {
+      margin: 6px 0;
+      color: #ccc;
+    }
+
+    .cancelado {
+      opacity: 0.55;
+    }
+
+    .bloqueado {
+      border-left: 4px solid #777;
     }
 
     .cancelar,
@@ -195,6 +213,55 @@
       background: #555;
     }
 
+    .vacio,
+    .sin-turnos {
+      color: #888;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* BLOQUEAR */
+
+    label {
+      display: block;
+      color: #ccc;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 9px;
+      border: none;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .guardar {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 9px;
+      background: white;
+      color: #111;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .mensaje {
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .error {
+      color: #ff6b6b;
+    }
+
+    .exito {
+      color: #7CFF8A;
+    }
+
     .volver {
       display: block;
       text-align: center;
@@ -203,6 +270,26 @@
       margin-top: 20px;
     }
 
+    @media (max-width: 600px) {
+
+      .dia {
+        min-height: 55px;
+        padding: 6px 4px;
+      }
+
+      .numero-dia {
+        font-size: 14px;
+      }
+
+      .indicador {
+        font-size: 9px;
+      }
+
+      .dias-semana {
+        font-size: 10px;
+      }
+
+    }
   </style>
 </head>
 
@@ -212,10 +299,7 @@
      LOGIN
 ========================= -->
 
-<div
-  id="login"
-  class="container"
->
+<div id="login" class="container">
 
   <div class="card">
 
@@ -248,16 +332,13 @@
     >
 
     <button
-      class="principal"
+      class="guardar"
       onclick="iniciarSesion()"
     >
       🔐 Ingresar
     </button>
 
-    <p
-      id="mensajeLogin"
-      class="error"
-    ></p>
+    <p id="mensajeLogin" class="error"></p>
 
   </div>
 
@@ -268,10 +349,7 @@
      ADMIN
 ========================= -->
 
-<div
-  id="admin"
-  class="container oculto"
->
+<div id="admin" class="container" style="display:none;">
 
   <h1>MUDITOOO BARBER</h1>
 
@@ -286,9 +364,6 @@
     🚪 Cerrar sesión
   </button>
 
-
-  <!-- ACTUALIZAR -->
-
   <button
     class="actualizar"
     onclick="actualizarTodo()"
@@ -297,21 +372,67 @@
   </button>
 
 
-  <!-- TURNOS DE HOY -->
+  <!-- =========================
+       CALENDARIO
+  ========================= -->
 
-  <div class="card hoy">
+  <div class="card">
 
-    <h2>📅 Turnos de hoy</h2>
+    <h2>🗓️ Calendario</h2>
+
+    <div class="mes">
+
+      <button onclick="mesAnterior()">
+        ‹
+      </button>
+
+      <span id="nombreMes"></span>
+
+      <button onclick="mesSiguiente()">
+        ›
+      </button>
+
+    </div>
+
+
+    <div class="dias-semana">
+
+      <div class="dia-semana">LUN</div>
+      <div class="dia-semana">MAR</div>
+      <div class="dia-semana">MIÉ</div>
+      <div class="dia-semana">JUE</div>
+      <div class="dia-semana">VIE</div>
+      <div class="dia-semana">SÁB</div>
+      <div class="dia-semana">DOM</div>
+
+    </div>
+
+
+    <div
+      id="calendario"
+      class="calendario"
+    ></div>
+
+  </div>
+
+
+  <!-- =========================
+       TURNOS DEL DÍA
+  ========================= -->
+
+  <div class="card">
+
+    <h2>📅 Turnos del día</h2>
 
     <p
-      id="fechaHoy"
-      class="fecha-hoy"
+      id="fechaSeleccionada"
+      class="fecha-seleccionada"
     ></p>
 
-    <div id="turnosHoy">
+    <div id="turnosDia">
 
       <p class="sin-turnos">
-        Cargando...
+        Seleccioná un día.
       </p>
 
     </div>
@@ -319,7 +440,9 @@
   </div>
 
 
-  <!-- BLOQUEAR HORARIO -->
+  <!-- =========================
+       BLOQUEAR HORARIO
+  ========================= -->
 
   <div class="card">
 
@@ -351,7 +474,7 @@
     </select>
 
     <button
-      class="principal"
+      class="guardar"
       onclick="bloquearHorario()"
     >
       🚫 Bloquear horario
@@ -359,41 +482,8 @@
 
     <p
       id="mensajeBloqueo"
-      class="exito"
+      class="mensaje"
     ></p>
-
-  </div>
-
-
-  <!-- TURNOS DEL MES -->
-
-  <div class="card">
-
-    <div class="mes">
-
-      <button
-        onclick="mesAnterior()"
-      >
-        ‹
-      </button>
-
-      <span id="nombreMes"></span>
-
-      <button
-        onclick="mesSiguiente()"
-      >
-        ›
-      </button>
-
-    </div>
-
-    <div id="turnos">
-
-      <p class="vacio">
-        Cargando...
-      </p>
-
-    </div>
 
   </div>
 
@@ -430,22 +520,16 @@ const supabaseClient =
 
 
 /* =========================
-   HORARIOS
+   VARIABLES
 ========================= */
-
-const horarios = [
-  "14:40",
-  "15:40",
-  "16:40",
-  "17:40",
-  "18:40",
-  "19:40",
-  "20:40"
-];
-
 
 let fechaActual =
   new Date();
+
+let fechaSeleccionada =
+  new Date();
+
+let turnosMes = [];
 
 
 const nombresMeses = [
@@ -462,6 +546,48 @@ const nombresMeses = [
   "noviembre",
   "diciembre"
 ];
+
+
+/* =========================
+   FORMATO FECHA
+========================= */
+
+function formatoFecha(fecha) {
+
+  const año =
+    fecha.getFullYear();
+
+  const mes =
+    String(
+      fecha.getMonth() + 1
+    ).padStart(2, "0");
+
+  const dia =
+    String(
+      fecha.getDate()
+    ).padStart(2, "0");
+
+  return `${año}-${mes}-${dia}`;
+}
+
+
+/* =========================
+   FECHA PARA MOSTRAR
+========================= */
+
+function mostrarFecha(fecha) {
+
+  return fecha.toLocaleDateString(
+    "es-AR",
+    {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }
+  );
+
+}
 
 
 /* =========================
@@ -497,11 +623,12 @@ async function iniciarSesion() {
   }
 
 
-  const { data, error } =
-    await supabaseClient.auth.signInWithPassword({
-      email: email,
-      password: password
-    });
+  const { error } =
+    await supabaseClient.auth
+      .signInWithPassword({
+        email: email,
+        password: password
+      });
 
 
   if (error) {
@@ -528,13 +655,11 @@ function mostrarAdmin() {
 
   document.getElementById(
     "login"
-  ).classList.add("oculto");
+  ).style.display = "none";
 
   document.getElementById(
     "admin"
-  ).classList.remove("oculto");
-
-  mostrarFechaHoy();
+  ).style.display = "block";
 
   actualizarTodo();
 
@@ -551,11 +676,11 @@ async function cerrarSesion() {
 
   document.getElementById(
     "admin"
-  ).classList.add("oculto");
+  ).style.display = "none";
 
   document.getElementById(
     "login"
-  ).classList.remove("oculto");
+  ).style.display = "block";
 
   document.getElementById(
     "password"
@@ -576,209 +701,9 @@ async function comprobarSesion() {
     await supabaseClient.auth.getSession();
 
 
-  if (
-    data.session
-  ) {
+  if (data.session) {
 
     mostrarAdmin();
-
-  } else {
-
-    document.getElementById(
-      "login"
-    ).classList.remove("oculto");
-
-  }
-
-}
-
-
-/* =========================
-   FORMATO FECHA
-========================= */
-
-function formatoFecha(fecha) {
-
-  const año =
-    fecha.getFullYear();
-
-  const mes =
-    String(
-      fecha.getMonth() + 1
-    ).padStart(2, "0");
-
-  const dia =
-    String(
-      fecha.getDate()
-    ).padStart(2, "0");
-
-  return `${año}-${mes}-${dia}`;
-}
-
-
-/* =========================
-   FECHA HOY
-========================= */
-
-function mostrarFechaHoy() {
-
-  const hoy =
-    new Date();
-
-  const texto =
-    hoy.toLocaleDateString(
-      "es-AR",
-      {
-        weekday: "long",
-        day: "numeric",
-        month: "long"
-      }
-    );
-
-  document.getElementById(
-    "fechaHoy"
-  ).textContent = texto;
-
-}
-
-
-/* =========================
-   CARGAR TURNOS HOY
-========================= */
-
-async function cargarTurnosHoy() {
-
-  const contenedor =
-    document.getElementById(
-      "turnosHoy"
-    );
-
-  const hoy =
-    formatoFecha(
-      new Date()
-    );
-
-
-  contenedor.innerHTML =
-    '<p class="sin-turnos">Cargando...</p>';
-
-
-  try {
-
-    const { data, error } =
-      await supabaseClient
-        .from("turnos")
-        .select(
-          "id,fecha,hora,nombre,telefono,estado"
-        )
-        .eq("fecha", hoy)
-        .order("hora", {
-          ascending: true
-        });
-
-
-    if (error) {
-      throw error;
-    }
-
-
-    const activos =
-      data.filter(
-        function(turno) {
-
-          return turno.estado !==
-            "cancelado";
-
-        }
-      );
-
-
-    contenedor.innerHTML = "";
-
-
-    if (
-      activos.length === 0
-    ) {
-
-      contenedor.innerHTML =
-        '<p class="sin-turnos">' +
-        'No hay turnos para hoy.' +
-        '</p>';
-
-      return;
-    }
-
-
-    activos.forEach(
-      function(turno) {
-
-        const div =
-          document.createElement(
-            "div"
-          );
-
-        div.className =
-          "turno-hoy";
-
-
-        if (
-          turno.estado ===
-          "bloqueado"
-        ) {
-
-          div.innerHTML = `
-
-            <strong>
-              🕐 ${turno.hora}
-            </strong>
-
-            <p>
-              🚫 Horario bloqueado
-            </p>
-
-          `;
-
-        } else {
-
-          div.innerHTML = `
-
-            <strong>
-              🕐 ${turno.hora}
-            </strong>
-
-            <p>
-              👤 ${turno.nombre}
-            </p>
-
-            <p>
-              📱 ${turno.telefono}
-            </p>
-
-            <p>
-              Estado: ${turno.estado}
-            </p>
-
-          `;
-
-        }
-
-
-        contenedor.appendChild(
-          div
-        );
-
-      }
-    );
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    contenedor.innerHTML =
-      '<p class="error">' +
-      'No se pudieron cargar los turnos.' +
-      '</p>';
 
   }
 
@@ -789,30 +714,7 @@ async function cargarTurnosHoy() {
    CARGAR TURNOS DEL MES
 ========================= */
 
-async function cargarTurnos() {
-
-  const contenedor =
-    document.getElementById(
-      "turnos"
-    );
-
-  const nombreMes =
-    document.getElementById(
-      "nombreMes"
-    );
-
-
-  nombreMes.textContent =
-    nombresMeses[
-      fechaActual.getMonth()
-    ] +
-    " " +
-    fechaActual.getFullYear();
-
-
-  contenedor.innerHTML =
-    '<p class="vacio">Cargando...</p>';
-
+async function cargarTurnosMes() {
 
   const año =
     fechaActual.getFullYear();
@@ -841,77 +743,422 @@ async function cargarTurnos() {
     );
 
 
-  try {
-
-    const { data, error } =
-      await supabaseClient
-        .from("turnos")
-        .select(
-          "id,fecha,hora,nombre,telefono,estado"
-        )
-        .gte("fecha", primerDia)
-        .lte("fecha", ultimoDia)
-        .order("fecha", {
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("turnos")
+      .select(
+        "id,fecha,hora,nombre,telefono,estado"
+      )
+      .gte(
+        "fecha",
+        primerDia
+      )
+      .lte(
+        "fecha",
+        ultimoDia
+      )
+      .order(
+        "fecha",
+        {
           ascending: true
-        })
-        .order("hora", {
+        }
+      )
+      .order(
+        "hora",
+        {
           ascending: true
-        });
+        }
+      );
 
 
-    if (error) {
-      throw error;
-    }
+  if (error) {
+
+    console.error(error);
+
+    document.getElementById(
+      "calendario"
+    ).innerHTML =
+      '<p class="error">No se pudieron cargar los turnos.</p>';
+
+    return;
+
+  }
 
 
-    contenedor.innerHTML = "";
+  turnosMes =
+    data || [];
+
+
+  dibujarCalendario();
+
+  mostrarTurnosDia();
+
+}
+
+
+/* =========================
+   DIBUJAR CALENDARIO
+========================= */
+
+function dibujarCalendario() {
+
+  const calendario =
+    document.getElementById(
+      "calendario"
+    );
+
+  const nombreMes =
+    document.getElementById(
+      "nombreMes"
+    );
+
+
+  const año =
+    fechaActual.getFullYear();
+
+  const mes =
+    fechaActual.getMonth();
+
+
+  nombreMes.textContent =
+    nombresMeses[mes] +
+    " " +
+    año;
+
+
+  calendario.innerHTML = "";
+
+
+  /*
+    JavaScript:
+    0 = domingo
+    1 = lunes
+    etc.
+
+    Convertimos para que:
+    lunes = 0
+    domingo = 6
+  */
+
+  const primerDiaSemana =
+    new Date(
+      año,
+      mes,
+      1
+    ).getDay();
+
+
+  const espacios =
+    primerDiaSemana === 0
+      ? 6
+      : primerDiaSemana - 1;
+
+
+  for (
+    let i = 0;
+    i < espacios;
+    i++
+  ) {
+
+    const vacio =
+      document.createElement(
+        "div"
+      );
+
+    vacio.className =
+      "dia vacio";
+
+    calendario.appendChild(
+      vacio
+    );
+
+  }
+
+
+  const cantidadDias =
+    new Date(
+      año,
+      mes + 1,
+      0
+    ).getDate();
+
+
+  const hoy =
+    formatoFecha(
+      new Date()
+    );
+
+
+  for (
+    let dia = 1;
+    dia <= cantidadDias;
+    dia++
+  ) {
+
+    const fecha =
+      new Date(
+        año,
+        mes,
+        dia
+      );
+
+
+    const fechaTexto =
+      formatoFecha(fecha);
+
+
+    const boton =
+      document.createElement(
+        "button"
+      );
+
+
+    boton.type = "button";
+
+    boton.className =
+      "dia";
 
 
     if (
-      data.length === 0
+      fechaTexto === hoy
     ) {
 
-      contenedor.innerHTML =
-        '<p class="vacio">' +
-        'No hay turnos este mes.' +
-        '</p>';
+      boton.classList.add(
+        "hoy"
+      );
 
-      return;
     }
 
 
-    data.forEach(
-      function(turno) {
+    if (
+      fechaTexto ===
+      formatoFecha(
+        fechaSeleccionada
+      )
+    ) {
 
-        const div =
-          document.createElement(
-            "div"
+      boton.classList.add(
+        "seleccionado"
+      );
+
+    }
+
+
+    if (
+      fecha.getDay() === 0
+    ) {
+
+      boton.classList.add(
+        "domingo"
+      );
+
+    }
+
+
+    const turnosDelDia =
+      turnosMes.filter(
+        function(turno) {
+
+          return (
+            turno.fecha ===
+            fechaTexto
           );
 
-        div.className =
-          "turno";
+        }
+      );
 
+
+    const activos =
+      turnosDelDia.filter(
+        function(turno) {
+
+          return (
+            turno.estado !==
+            "cancelado"
+          );
+
+        }
+      );
+
+
+    let indicador =
+      "";
+
+
+    if (
+      activos.length > 0
+    ) {
+
+      indicador =
+        `🕐 ${activos.length} turno${activos.length === 1 ? "" : "s"}`;
+
+    } else {
+
+      indicador =
+        "Sin turnos";
+
+    }
+
+
+    boton.innerHTML = `
+
+      <div class="numero-dia">
+        ${dia}
+      </div>
+
+      <div class="indicador">
+        ${indicador}
+      </div>
+
+    `;
+
+
+    boton.onclick =
+      function() {
+
+        fechaSeleccionada =
+          new Date(
+            año,
+            mes,
+            dia
+          );
+
+        dibujarCalendario();
+
+        mostrarTurnosDia();
+
+      };
+
+
+    calendario.appendChild(
+      boton
+    );
+
+  }
+
+}
+
+
+/* =========================
+   MOSTRAR TURNOS DEL DÍA
+========================= */
+
+function mostrarTurnosDia() {
+
+  const contenedor =
+    document.getElementById(
+      "turnosDia"
+    );
+
+  const titulo =
+    document.getElementById(
+      "fechaSeleccionada"
+    );
+
+
+  const fecha =
+    formatoFecha(
+      fechaSeleccionada
+    );
+
+
+  titulo.textContent =
+    mostrarFecha(
+      fechaSeleccionada
+    );
+
+
+  const turnos =
+    turnosMes.filter(
+      function(turno) {
+
+        return turno.fecha ===
+          fecha;
+
+      }
+    );
+
+
+  contenedor.innerHTML = "";
+
+
+  if (
+    turnos.length === 0
+  ) {
+
+    contenedor.innerHTML =
+      '<p class="sin-turnos">No hay turnos para este día.</p>';
+
+    return;
+  }
+
+
+  turnos.forEach(
+    function(turno) {
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.className =
+        "turno";
+
+
+      if (
+        turno.estado ===
+        "cancelado"
+      ) {
+
+        div.classList.add(
+          "cancelado"
+        );
+
+      }
+
+
+      if (
+        turno.estado ===
+        "bloqueado"
+      ) {
+
+        div.classList.add(
+          "bloqueado"
+        );
+
+        div.innerHTML = `
+
+          <strong>
+            🕐 ${turno.hora}
+          </strong>
+
+          <p>
+            🚫 Horario bloqueado
+          </p>
+
+          <p>
+            Estado: bloqueado
+          </p>
+
+          <button
+            class="desbloquear"
+            onclick="desbloquearHorario(${turno.id})"
+          >
+            🔓 Desbloquear horario
+          </button>
+
+        `;
+
+      } else {
 
         let boton = "";
 
 
         if (
-          turno.estado ===
-          "bloqueado"
-        ) {
-
-          boton = `
-
-            <button
-              class="desbloquear"
-              onclick="desbloquearHorario(${turno.id})"
-            >
-              🔓 Desbloquear horario
-            </button>
-
-          `;
-
-        } else if (
           turno.estado !==
           "cancelado"
         ) {
@@ -933,29 +1180,16 @@ async function cargarTurnos() {
         div.innerHTML = `
 
           <strong>
-            📅 ${turno.fecha}
-            — 🕐 ${turno.hora}
+            🕐 ${turno.hora}
           </strong>
 
-          ${
-            turno.estado === "bloqueado"
+          <p>
+            👤 ${turno.nombre}
+          </p>
 
-            ? `
-              <p>
-                🚫 Horario bloqueado
-              </p>
-            `
-
-            : `
-              <p>
-                👤 ${turno.nombre}
-              </p>
-
-              <p>
-                📱 ${turno.telefono}
-              </p>
-            `
-          }
+          <p>
+            📱 ${turno.telefono}
+          </p>
 
           <p>
             Estado: ${turno.estado}
@@ -965,38 +1199,15 @@ async function cargarTurnos() {
 
         `;
 
-
-        contenedor.appendChild(
-          div
-        );
-
       }
-    );
 
 
-  } catch (error) {
+      contenedor.appendChild(
+        div
+      );
 
-    console.error(error);
-
-    contenedor.innerHTML =
-      '<p class="error">' +
-      'No se pudieron cargar los turnos.' +
-      '</p>';
-
-  }
-
-}
-
-
-/* =========================
-   ACTUALIZAR
-========================= */
-
-function actualizarTodo() {
-
-  cargarTurnosHoy();
-
-  cargarTurnos();
+    }
+  );
 
 }
 
@@ -1029,12 +1240,13 @@ async function bloquearHorario() {
   if (!fecha) {
 
     mensaje.className =
-      "error";
+      "mensaje error";
 
     mensaje.textContent =
       "Elegí una fecha.";
 
     return;
+
   }
 
 
@@ -1049,8 +1261,14 @@ async function bloquearHorario() {
         .select(
           "id,estado"
         )
-        .eq("fecha", fecha)
-        .eq("hora", hora);
+        .eq(
+          "fecha",
+          fecha
+        )
+        .eq(
+          "hora",
+          hora
+        );
 
 
     if (errorBusqueda) {
@@ -1072,17 +1290,18 @@ async function bloquearHorario() {
     if (ocupado) {
 
       mensaje.className =
-        "error";
+        "mensaje error";
 
       mensaje.textContent =
         "Ese horario ya está ocupado.";
 
       return;
+
     }
 
 
     const {
-      error: errorInsertar
+      error
     } =
       await supabaseClient
         .from("turnos")
@@ -1104,80 +1323,35 @@ async function bloquearHorario() {
         });
 
 
-    if (errorInsertar) {
-      throw errorInsertar;
-    }
-
-
-    mensaje.className =
-      "exito";
-
-    mensaje.textContent =
-      "✅ Horario bloqueado correctamente.";
-
-
-    actualizarTodo();
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    mensaje.className =
-      "error";
-
-    mensaje.textContent =
-      "No se pudo bloquear el horario.";
-
-  }
-
-}
-
-
-/* =========================
-   DESBLOQUEAR
-========================= */
-
-async function desbloquearHorario(id) {
-
-  if (
-    !confirm(
-      "¿Querés desbloquear este horario?"
-    )
-  ) {
-    return;
-  }
-
-
-  try {
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("turnos")
-        .update({
-          estado:
-            "cancelado"
-        })
-        .eq("id", id);
-
-
     if (error) {
       throw error;
     }
 
 
-    actualizarTodo();
+    mensaje.className =
+      "mensaje exito";
 
+    mensaje.textContent =
+      "✅ Horario bloqueado correctamente.";
+
+
+    fechaSeleccionada =
+      new Date(
+        fecha + "T00:00:00"
+      );
+
+
+    actualizarTodo();
 
   } catch (error) {
 
     console.error(error);
 
-    alert(
-      "No se pudo desbloquear."
-    );
+    mensaje.className =
+      "mensaje error";
+
+    mensaje.textContent =
+      "No se pudo bloquear el horario.";
 
   }
 
@@ -1195,7 +1369,9 @@ async function cancelarTurno(id) {
       "¿Seguro que querés cancelar este turno?"
     )
   ) {
+
     return;
+
   }
 
 
@@ -1210,7 +1386,10 @@ async function cancelarTurno(id) {
           estado:
             "cancelado"
         })
-        .eq("id", id);
+        .eq(
+          "id",
+          id
+        );
 
 
     if (error) {
@@ -1219,7 +1398,6 @@ async function cancelarTurno(id) {
 
 
     actualizarTodo();
-
 
   } catch (error) {
 
@@ -1235,13 +1413,79 @@ async function cancelarTurno(id) {
 
 
 /* =========================
-   CAMBIAR MES
+   DESBLOQUEAR
+========================= */
+
+async function desbloquearHorario(id) {
+
+  if (
+    !confirm(
+      "¿Querés desbloquear este horario?"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("turnos")
+        .update({
+          estado:
+            "cancelado"
+        })
+        .eq(
+          "id",
+          id
+        );
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    actualizarTodo();
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "No se pudo desbloquear."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   ACTUALIZAR TODO
+========================= */
+
+function actualizarTodo() {
+
+  cargarTurnosMes();
+
+}
+
+
+/* =========================
+   MES ANTERIOR
 ========================= */
 
 function mesAnterior() {
 
   const hoy =
     new Date();
+
 
   const mesActual =
     new Date(
@@ -1262,17 +1506,32 @@ function mesAnterior() {
   if (
     nuevoMes < mesActual
   ) {
+
     return;
+
   }
 
 
   fechaActual =
     nuevoMes;
 
-  cargarTurnos();
+
+  fechaSeleccionada =
+    new Date(
+      fechaActual.getFullYear(),
+      fechaActual.getMonth(),
+      1
+    );
+
+
+  cargarTurnosMes();
 
 }
 
+
+/* =========================
+   MES SIGUIENTE
+========================= */
 
 function mesSiguiente() {
 
@@ -1283,7 +1542,16 @@ function mesSiguiente() {
       1
     );
 
-  cargarTurnos();
+
+  fechaSeleccionada =
+    new Date(
+      fechaActual.getFullYear(),
+      fechaActual.getMonth(),
+      1
+    );
+
+
+  cargarTurnosMes();
 
 }
 

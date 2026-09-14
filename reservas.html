@@ -67,20 +67,20 @@
       font-size: 18px;
     }
 
-    .mes button:hover {
-      background: #444;
-    }
-
     #nombreMes {
       font-size: 20px;
       font-weight: bold;
       text-transform: capitalize;
     }
 
-    .dias {
+    .dias,
+    .calendario {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 6px;
+    }
+
+    .dias {
       margin-bottom: 6px;
     }
 
@@ -89,12 +89,6 @@
       color: #aaa;
       font-size: 13px;
       padding: 8px 0;
-    }
-
-    .calendario {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
     }
 
     .dia {
@@ -200,10 +194,6 @@
       cursor: pointer;
     }
 
-    .confirmar:hover {
-      background: #ddd;
-    }
-
     .confirmar:disabled {
       background: #555;
       color: #999;
@@ -223,16 +213,18 @@
       display: block;
     }
 
-    .exito h2 {
-      margin-bottom: 15px;
-    }
-
     .volver {
       display: block;
       margin-top: 20px;
       color: white;
       text-decoration: none;
       text-align: center;
+    }
+
+    .error {
+      color: #ff7777;
+      text-align: center;
+      margin-top: 15px;
     }
 
     @media (max-width: 500px) {
@@ -252,11 +244,13 @@
 <div class="container">
 
   <header>
-    <h1>✂️ MUDITOOO BARBER</h1>
+    <h1>MUDITOOO BARBER</h1>
     <p>Elegí tu día y horario</p>
   </header>
 
   <div class="card">
+
+    <h2>📅 Reservar turno</h2>
 
     <div class="mes">
       <button onclick="mesAnterior()">‹</button>
@@ -276,36 +270,35 @@
 
     <div id="calendario" class="calendario"></div>
 
-    <p id="mensajeDia" class="mensaje">
-      Elegí un día para ver los horarios.
+    <p id="mensaje" class="mensaje">
+      Seleccioná un día para ver los horarios disponibles.
     </p>
 
     <div id="horarios" class="horarios"></div>
 
     <div id="formulario" class="formulario">
 
-      <h2>Datos del turno</h2>
-
       <input
         type="text"
         id="nombre"
-        placeholder="Nombre y apellido"
-        required
+        placeholder="Tu nombre"
       >
 
       <input
         type="tel"
         id="telefono"
-        placeholder="Teléfono"
-        required
+        placeholder="Tu teléfono"
       >
 
       <button
         id="botonConfirmar"
         class="confirmar"
-        onclick="reservarTurno()">
+        onclick="reservarTurno()"
+      >
         Confirmar turno
       </button>
+
+      <p id="error" class="error"></p>
 
     </div>
 
@@ -313,32 +306,24 @@
 
   <div id="exito" class="exito">
 
-    <h2>✅ Turno reservado</h2>
+    <h2>✅ ¡Turno reservado!</h2>
 
     <p id="detalleTurno"></p>
 
-    <a href="reservas.html" class="volver">
-      Volver al calendario
+    <a href="index.html" class="volver">
+      Volver al inicio
     </a>
 
   </div>
 
 </div>
 
+
 <script>
 
-  /*
-  ==================================================
-  CONFIGURACIÓN DE SUPABASE
-  ==================================================
-
-  Pegá TU PUBLISHABLE KEY entre las comillas.
-
-  NO pongas ninguna clave que empiece por:
-  sb_secret_
-
-  ==================================================
-  */
+  // ==========================================
+  // SUPABASE
+  // ==========================================
 
   const SUPABASE_URL =
     "https://tfwejlwycexmcgznxlao.supabase.co";
@@ -347,11 +332,9 @@
     sb_publishable_RnheFzHcB78UTEaXBYOp9g_ZbktcycR
 
 
-  /*
-  ==================================================
-  CONFIGURACIÓN DE TURNOS
-  ==================================================
-  */
+  // ==========================================
+  // HORARIOS
+  // ==========================================
 
   const horarios = [
     "14:40",
@@ -363,65 +346,114 @@
     "20:40"
   ];
 
+
+  // ==========================================
+  // VARIABLES
+  // ==========================================
+
   let fechaActual = new Date();
 
   let fechaSeleccionada = null;
 
   let horaSeleccionada = null;
 
-  /*
-  ==================================================
-  CALENDARIO
-  ==================================================
-  */
+
+  const nombresMeses = [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre"
+  ];
+
+
+  // ==========================================
+  // FECHA DE HOY
+  // ==========================================
+
+  function fechaHoy() {
+
+    const hoy = new Date();
+
+    return new Date(
+      hoy.getFullYear(),
+      hoy.getMonth(),
+      hoy.getDate()
+    );
+
+  }
+
+
+  // ==========================================
+  // FORMATO FECHA
+  // ==========================================
+
+  function formatoFecha(fecha) {
+
+    const año = fecha.getFullYear();
+
+    const mes = String(
+      fecha.getMonth() + 1
+    ).padStart(2, "0");
+
+    const dia = String(
+      fecha.getDate()
+    ).padStart(2, "0");
+
+    return `${año}-${mes}-${dia}`;
+
+  }
+
+
+  // ==========================================
+  // MOSTRAR CALENDARIO
+  // ==========================================
 
   function mostrarCalendario() {
 
     const calendario =
       document.getElementById("calendario");
 
+    const nombreMes =
+      document.getElementById("nombreMes");
+
     calendario.innerHTML = "";
 
-    const año = fechaActual.getFullYear();
+    nombreMes.textContent =
+      `${nombresMeses[fechaActual.getMonth()]} ${fechaActual.getFullYear()}`;
 
-    const mes = fechaActual.getMonth();
+
+    const año =
+      fechaActual.getFullYear();
+
+    const mes =
+      fechaActual.getMonth();
+
 
     const primerDia =
       new Date(año, mes, 1);
 
-    const ultimoDia =
-      new Date(año, mes + 1, 0);
-
-    const nombreMes =
-      fechaActual.toLocaleDateString(
-        "es-AR",
-        {
-          month: "long",
-          year: "numeric"
-        }
-      );
-
-    document.getElementById("nombreMes")
-      .textContent = nombreMes;
-
-    /*
-      Convertimos domingo=0 a lunes=0
-    */
-
-    let inicio =
+    let diaSemana =
       primerDia.getDay();
 
-    if (inicio === 0) {
-      inicio = 6;
-    } else {
-      inicio = inicio - 1;
-    }
+    // Convertir domingo=0 a lunes=0
+    diaSemana =
+      diaSemana === 0 ? 6 : diaSemana - 1;
 
-    /*
-      Espacios antes del primer día
-    */
 
-    for (let i = 0; i < inicio; i++) {
+    const cantidadDias =
+      new Date(año, mes + 1, 0).getDate();
+
+
+    // Espacios vacíos
+    for (let i = 0; i < diaSemana; i++) {
 
       const vacio =
         document.createElement("div");
@@ -429,17 +461,17 @@
       vacio.className = "dia vacio";
 
       calendario.appendChild(vacio);
+
     }
 
-    /*
-      Días del mes
-    */
 
-    for (
-      let dia = 1;
-      dia <= ultimoDia.getDate();
-      dia++
-    ) {
+    const hoy = fechaHoy();
+
+
+    for (let dia = 1; dia <= cantidadDias; dia++) {
+
+      const fecha =
+        new Date(año, mes, dia);
 
       const boton =
         document.createElement("button");
@@ -448,186 +480,175 @@
 
       boton.textContent = dia;
 
-      const fecha =
-        new Date(año, mes, dia);
 
-      /*
-        Domingo
-      */
-
+      // Domingo
       if (fecha.getDay() === 0) {
 
         boton.classList.add("domingo");
 
         boton.disabled = true;
 
-      } else {
+      }
 
-        /*
-          Día actual
-        */
 
-        const hoy = new Date();
+      // Días anteriores
+      if (fecha < hoy) {
 
-        if (
-          fecha.getDate() === hoy.getDate() &&
-          fecha.getMonth() === hoy.getMonth() &&
-          fecha.getFullYear() === hoy.getFullYear()
-        ) {
+        boton.disabled = true;
 
-          boton.classList.add("hoy");
+        boton.style.opacity = "0.35";
 
-        }
-
-        /*
-          No permitir días anteriores
-        */
-
-        const hoySinHora =
-          new Date(
-            hoy.getFullYear(),
-            hoy.getMonth(),
-            hoy.getDate()
-          );
-
-        if (fecha < hoySinHora) {
-
-          boton.disabled = true;
-
-          boton.style.opacity = "0.3";
-
-        } else {
-
-          boton.onclick = function() {
-
-            seleccionarDia(fecha);
-
-          };
-
-        }
+        boton.style.cursor = "not-allowed";
 
       }
 
-      calendario.appendChild(boton);
-    }
-  }
 
-
-  /*
-  ==================================================
-  SELECCIONAR DÍA
-  ==================================================
-  */
-
-  function seleccionarDia(fecha) {
-
-    fechaSeleccionada = fecha;
-
-    horaSeleccionada = null;
-
-    document
-      .querySelectorAll(".dia")
-      .forEach(dia => {
-        dia.classList.remove("seleccionado");
-      });
-
-    const botones =
-      document.querySelectorAll(".dia");
-
-    botones.forEach(boton => {
-
+      // Hoy
       if (
-        boton.textContent ==
-        fecha.getDate()
+        fecha.getTime() === hoy.getTime()
+      ) {
+
+        boton.classList.add("hoy");
+
+      }
+
+
+      // Seleccionado
+      if (
+        fechaSeleccionada &&
+        formatoFecha(fecha) ===
+        formatoFecha(fechaSeleccionada)
       ) {
 
         boton.classList.add("seleccionado");
 
       }
 
-    });
 
-    const textoFecha =
-      fecha.toLocaleDateString(
-        "es-AR",
-        {
-          weekday: "long",
-          day: "numeric",
-          month: "long"
-        }
-      );
+      if (
+        fecha >= hoy &&
+        fecha.getDay() !== 0
+      ) {
 
-    document.getElementById("mensajeDia")
-      .textContent =
-      "Horarios disponibles para " +
-      textoFecha;
+        boton.onclick = function() {
 
-    cargarHorarios();
+          seleccionarFecha(fecha);
+
+        };
+
+      }
+
+
+      calendario.appendChild(boton);
+
+    }
+
   }
 
 
-  /*
-  ==================================================
-  CARGAR HORARIOS
-  ==================================================
-  */
+  // ==========================================
+  // SELECCIONAR FECHA
+  // ==========================================
 
-  async function cargarHorarios() {
+  async function seleccionarFecha(fecha) {
+
+    fechaSeleccionada = fecha;
+
+    horaSeleccionada = null;
+
+    mostrarCalendario();
+
+    document.getElementById("formulario")
+      .classList.remove("mostrar");
+
+    document.getElementById("mensaje")
+      .textContent =
+      "Cargando horarios...";
+
+    await mostrarHorarios();
+
+  }
+
+
+  // ==========================================
+  // MOSTRAR HORARIOS
+  // ==========================================
+
+  async function mostrarHorarios() {
 
     const contenedor =
       document.getElementById("horarios");
 
     contenedor.innerHTML = "";
 
-    document.getElementById("formulario")
-      .classList.remove("mostrar");
-
     if (!fechaSeleccionada) {
+
       return;
+
     }
 
-    const fechaTexto =
-      formatearFecha(fechaSeleccionada);
 
-    let turnosOcupados = [];
+    const fecha =
+      formatoFecha(fechaSeleccionada);
+
+
+    let ocupados = [];
+
 
     try {
 
-      const respuesta =
-        await fetch(
-          SUPABASE_URL +
-          "/rest/v1/turnos?fecha=eq." +
-          fechaTexto +
-          "&select=hora,estado",
-          {
-            headers: {
-              "apikey": SUPABASE_KEY,
-              "Authorization":
-                "Bearer " + SUPABASE_KEY
-            }
+      const respuesta = await fetch(
+        `${SUPABASE_URL}/rest/v1/turnos?fecha=eq.${fecha}&select=hora,estado`,
+        {
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization":
+              `Bearer ${SUPABASE_KEY}`
           }
+        }
+      );
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          "No se pudieron cargar los turnos"
         );
-
-      if (respuesta.ok) {
-
-        const datos =
-          await respuesta.json();
-
-        turnosOcupados =
-          datos
-            .filter(t => t.estado !== "cancelado")
-            .map(t => t.hora);
 
       }
 
+
+      const datos =
+        await respuesta.json();
+
+
+      ocupados =
+        datos
+          .filter(turno =>
+            turno.estado !== "cancelado"
+          )
+          .map(turno =>
+            turno.hora
+          );
+
+
     } catch (error) {
 
-      console.log(
-        "No se pudieron consultar los turnos",
-        error
-      );
+      document.getElementById("mensaje")
+        .textContent =
+        "No se pudieron cargar los horarios.";
+
+      console.error(error);
+
+      return;
 
     }
+
+
+    document.getElementById("mensaje")
+      .textContent =
+      "Elegí un horario disponible:";
+
 
     horarios.forEach(hora => {
 
@@ -638,72 +659,84 @@
 
       boton.textContent = hora;
 
-      if (
-        turnosOcupados.includes(hora)
-      ) {
+
+      if (ocupados.includes(hora)) {
 
         boton.classList.add("ocupado");
 
         boton.disabled = true;
 
         boton.textContent =
-          hora + " - Ocupado";
+          `${hora} - Ocupado`;
 
       } else {
 
         boton.onclick = function() {
 
-          seleccionarHora(
-            hora,
-            boton
-          );
+          seleccionarHora(hora);
 
         };
 
       }
 
+
       contenedor.appendChild(boton);
 
     });
+
   }
 
 
-  /*
-  ==================================================
-  SELECCIONAR HORA
-  ==================================================
-  */
+  // ==========================================
+  // SELECCIONAR HORA
+  // ==========================================
 
-  function seleccionarHora(
-    hora,
-    boton
-  ) {
+  function seleccionarHora(hora) {
 
     horaSeleccionada = hora;
 
+
     document
       .querySelectorAll(".hora")
-      .forEach(h => {
-        h.classList.remove("seleccionada");
+      .forEach(boton => {
+
+        boton.classList.remove(
+          "seleccionada"
+        );
+
       });
 
-    boton.classList.add("seleccionada");
+
+    const botones =
+      document.querySelectorAll(".hora");
+
+
+    botones.forEach(boton => {
+
+      if (boton.textContent === hora) {
+
+        boton.classList.add(
+          "seleccionada"
+        );
+
+      }
+
+    });
+
 
     document.getElementById("formulario")
       .classList.add("mostrar");
 
-    document.getElementById("formulario")
-      .scrollIntoView({
-        behavior: "smooth"
-      });
+
+    document.getElementById("error")
+      .textContent = "";
+
   }
 
 
-  /*
-  ==================================================
-  RESERVAR TURNO
-  ==================================================
-  */
+  // ==========================================
+  // RESERVAR TURNO
+  // ==========================================
 
   async function reservarTurno() {
 
@@ -715,91 +748,109 @@
       document.getElementById("telefono")
         .value.trim();
 
-    if (!fechaSeleccionada) {
+    const error =
+      document.getElementById("error");
 
-      alert("Elegí un día.");
 
-      return;
-    }
+    error.textContent = "";
 
-    if (!horaSeleccionada) {
 
-      alert("Elegí un horario.");
+    if (!fechaSeleccionada || !horaSeleccionada) {
 
-      return;
-    }
-
-    if (!nombre || !telefono) {
-
-      alert("Completá tu nombre y teléfono.");
+      error.textContent =
+        "Elegí una fecha y un horario.";
 
       return;
+
     }
+
+
+    if (!nombre) {
+
+      error.textContent =
+        "Ingresá tu nombre.";
+
+      return;
+
+    }
+
+
+    if (!telefono) {
+
+      error.textContent =
+        "Ingresá tu teléfono.";
+
+      return;
+
+    }
+
 
     const boton =
       document.getElementById(
         "botonConfirmar"
       );
 
+
     boton.disabled = true;
 
     boton.textContent =
-      "Reservando...";
+      "Guardando...";
 
-    const fechaTexto =
-      formatearFecha(fechaSeleccionada);
+
+    const fecha =
+      formatoFecha(fechaSeleccionada);
+
 
     try {
 
-      /*
-        Primero verificamos nuevamente
-        que el horario siga libre.
-      */
+      // Verificar nuevamente que el horario siga libre
 
-      const comprobacion =
+      const comprobar =
         await fetch(
-          SUPABASE_URL +
-          "/rest/v1/turnos?fecha=eq." +
-          fechaTexto +
-          "&hora=eq." +
-          encodeURIComponent(horaSeleccionada) +
-          "&estado=neq.cancelado&select=id",
+          `${SUPABASE_URL}/rest/v1/turnos?fecha=eq.${fecha}&hora=eq.${horaSeleccionada}&select=id,estado`,
           {
             headers: {
               "apikey": SUPABASE_KEY,
               "Authorization":
-                "Bearer " + SUPABASE_KEY
+                `Bearer ${SUPABASE_KEY}`
             }
           }
         );
 
-      const existentes =
-        await comprobacion.json();
 
-      if (existentes.length > 0) {
+      const turnosExistentes =
+        await comprobar.json();
 
-        alert(
-          "Ese horario acaba de ser reservado. Elegí otro."
+
+      const ocupado =
+        turnosExistentes.some(
+          turno =>
+            turno.estado !== "cancelado"
         );
+
+
+      if (ocupado) {
+
+        error.textContent =
+          "Ese horario acaba de ser ocupado. Elegí otro.";
+
+        await mostrarHorarios();
 
         boton.disabled = false;
 
         boton.textContent =
           "Confirmar turno";
 
-        cargarHorarios();
-
         return;
+
       }
 
-      /*
-        Guardamos el turno
-      */
+
+      // Guardar reserva
 
       const respuesta =
         await fetch(
-          SUPABASE_URL +
-          "/rest/v1/turnos",
+          `${SUPABASE_URL}/rest/v1/turnos`,
           {
             method: "POST",
 
@@ -811,155 +862,131 @@
                 SUPABASE_KEY,
 
               "Authorization":
-                "Bearer " + SUPABASE_KEY,
+                `Bearer ${SUPABASE_KEY}`,
 
               "Prefer":
                 "return=minimal"
             },
 
             body: JSON.stringify({
-
-              fecha: fechaTexto,
-
+              fecha: fecha,
               hora: horaSeleccionada,
-
               nombre: nombre,
-
               telefono: telefono,
-
               estado: "confirmado"
-
             })
           }
         );
 
+
       if (!respuesta.ok) {
 
+        const texto =
+          await respuesta.text();
+
+        console.error(texto);
+
         throw new Error(
-          "No se pudo guardar el turno."
+          "No se pudo guardar"
         );
+
       }
 
-      const fechaBonita =
-        fechaSeleccionada.toLocaleDateString(
-          "es-AR",
-          {
-            weekday: "long",
-            day: "numeric",
-            month: "long"
-          }
-        );
 
-      document.getElementById(
-        "detalleTurno"
-      ).textContent =
-        nombre +
-        ", tu turno quedó reservado para el " +
-        fechaBonita +
-        " a las " +
-        horaSeleccionada +
-        ".";
+      // Mostrar éxito
+
+      document.getElementById("detalleTurno")
+        .textContent =
+        `Tu turno quedó reservado para el ${fecha} a las ${horaSeleccionada}.`;
+
 
       document.getElementById("exito")
         .classList.add("mostrar");
 
+
       document.querySelector(".card")
         .style.display = "none";
 
-    } catch (error) {
 
-      console.error(error);
+    } catch (e) {
 
-      alert(
-        "No se pudo reservar el turno. Revisá la conexión con Supabase."
-      );
+      console.error(e);
+
+      error.textContent =
+        "Hubo un error al reservar. Intentá nuevamente.";
 
       boton.disabled = false;
 
       boton.textContent =
         "Confirmar turno";
+
     }
+
   }
 
 
-  /*
-  ==================================================
-  FORMATO DE FECHA
-  ==================================================
-  */
-
-  function formatearFecha(fecha) {
-
-    const año =
-      fecha.getFullYear();
-
-    const mes =
-      String(
-        fecha.getMonth() + 1
-      ).padStart(2, "0");
-
-    const dia =
-      String(
-        fecha.getDate()
-      ).padStart(2, "0");
-
-    return (
-      año +
-      "-" +
-      mes +
-      "-" +
-      dia
-    );
-  }
-
-
-  /*
-  ==================================================
-  CAMBIAR MES
-  ==================================================
-  */
+  // ==========================================
+  // MES ANTERIOR
+  // ==========================================
 
   function mesAnterior() {
 
-    const ahora = new Date();
+    const hoy =
+      fechaHoy();
+
+    const nuevoMes =
+      new Date(
+        fechaActual.getFullYear(),
+        fechaActual.getMonth() - 1,
+        1
+      );
+
+
+    // No permitir meses anteriores al actual
 
     const mesActual =
-      ahora.getMonth();
+      new Date(
+        hoy.getFullYear(),
+        hoy.getMonth(),
+        1
+      );
 
-    const añoActual =
-      ahora.getFullYear();
 
-    if (
-      fechaActual.getFullYear() === añoActual &&
-      fechaActual.getMonth() <= mesActual
-    ) {
+    if (nuevoMes < mesActual) {
 
       return;
+
     }
 
-    fechaActual.setMonth(
-      fechaActual.getMonth() - 1
-    );
+
+    fechaActual = nuevoMes;
 
     mostrarCalendario();
+
   }
 
+
+  // ==========================================
+  // MES SIGUIENTE
+  // ==========================================
 
   function mesSiguiente() {
 
-    fechaActual.setMonth(
-      fechaActual.getMonth() + 1
-    );
+    fechaActual =
+      new Date(
+        fechaActual.getFullYear(),
+        fechaActual.getMonth() + 1,
+        1
+      );
 
     mostrarCalendario();
+
   }
 
 
-  /*
-  ==================================================
-  INICIAR
-  ==================================================
-  */
+  // ==========================================
+  // INICIAR
+  // ==========================================
 
   mostrarCalendario();
 

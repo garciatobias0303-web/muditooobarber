@@ -77,12 +77,11 @@
       border-radius: 10px;
     }
 
-    .boton-reserva {
+    .boton-reserva,
+    .boton-whatsapp {
       display: block;
       width: 100%;
       padding: 18px;
-      background: white;
-      color: black;
       border-radius: 10px;
       text-decoration: none;
       text-align: center;
@@ -91,9 +90,25 @@
       transition: 0.2s;
     }
 
+    .boton-reserva {
+      background: white;
+      color: black;
+      margin-bottom: 15px;
+    }
+
     .boton-reserva:hover {
       transform: scale(1.02);
       background: #e8e8e8;
+    }
+
+    .boton-whatsapp {
+      background: #25D366;
+      color: white;
+    }
+
+    .boton-whatsapp:hover {
+      transform: scale(1.02);
+      background: #20bd5a;
     }
 
     footer {
@@ -161,6 +176,13 @@
     target="_blank"
     class="boton-reserva">
     📅 Reservar turno
+  </a>
+
+  <a
+    href="https://wa.me/543755205171"
+    target="_blank"
+    class="boton-whatsapp">
+    💬 Contactar por WhatsApp
   </a>
 </div>
 

@@ -39,6 +39,11 @@
       background: #1c1c1c;
       padding: 20px;
       border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 0;
     }
 
     .mes {
@@ -82,32 +87,76 @@
       color: #ccc;
     }
 
-    .cancelar {
-      margin-top: 10px;
+    .cancelar,
+    .bloquear,
+    .desbloquear {
       width: 100%;
       padding: 10px;
       border: none;
       border-radius: 8px;
-      background: #b00020;
       color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .cancelar {
+      background: #b00020;
+    }
+
+    .bloquear {
+      background: #444;
+    }
+
+    .desbloquear {
+      background: #555;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      color: #ccc;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .guardar {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #fff;
+      color: #111;
       font-weight: bold;
       cursor: pointer;
     }
 
-    .cancelar:hover {
-      opacity: 0.85;
+    .mensaje {
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .error {
+      color: #ff6b6b;
+    }
+
+    .exito {
+      color: #7CFF8A;
     }
 
     .vacio {
       text-align: center;
       color: #999;
       padding: 20px;
-    }
-
-    .error {
-      color: #ff6b6b;
-      text-align: center;
-      padding: 15px;
     }
 
     .volver {
@@ -122,139 +171,226 @@
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <h1>MUDITOOO BARBER</h1>
+  <h1>MUDITOOO BARBER</h1>
 
-    <p class="subtitulo">
-      📅 Panel de administrador
-    </p>
+  <p class="subtitulo">
+    📅 Panel de administrador
+  </p>
 
-    <div class="card">
 
-      <div class="mes">
+  <!-- BLOQUEAR HORARIO -->
 
-        <button type="button" onclick="mesAnterior()">
-          ‹
-        </button>
+  <div class="card">
 
-        <span id="nombreMes"></span>
+    <h2>🚫 Bloquear horario</h2>
 
-        <button type="button" onclick="mesSiguiente()">
-          ›
-        </button>
+    <label for="fechaBloqueo">
+      Fecha
+    </label>
 
-      </div>
+    <input
+      type="date"
+      id="fechaBloqueo"
+    >
 
-      <div id="turnos">
-        <p class="vacio">
-          Cargando turnos...
-        </p>
-      </div>
+    <label for="horaBloqueo">
+      Horario
+    </label>
 
-    </div>
+    <select id="horaBloqueo">
 
-    <a href="reservas.html" class="volver">
-      ← Ir a reservar turno
-    </a>
+      <option value="14:40">14:40</option>
+      <option value="15:40">15:40</option>
+      <option value="16:40">16:40</option>
+      <option value="17:40">17:40</option>
+      <option value="18:40">18:40</option>
+      <option value="19:40">19:40</option>
+      <option value="20:40">20:40</option>
+
+    </select>
+
+    <button
+      class="guardar"
+      type="button"
+      onclick="bloquearHorario()"
+    >
+      🚫 Bloquear horario
+    </button>
+
+    <p
+      id="mensajeBloqueo"
+      class="mensaje"
+    ></p>
 
   </div>
 
 
-  <script>
+  <!-- TURNOS -->
 
-    const SUPABASE_URL =
-      "https://tfwejlwycexmcgznxlao.supabase.co";
+  <div class="card">
 
-    const SUPABASE_KEY =
-      "sb_publishable_RnheFzHcB78UTEaXBYOp9g_ZbktcycR";
+    <div class="mes">
 
+      <button
+        type="button"
+        onclick="mesAnterior()"
+      >
+        ‹
+      </button>
 
-    let fechaActual = new Date();
+      <span id="nombreMes"></span>
 
+      <button
+        type="button"
+        onclick="mesSiguiente()"
+      >
+        ›
+      </button>
 
-    const nombresMeses = [
-      "enero",
-      "febrero",
-      "marzo",
-      "abril",
-      "mayo",
-      "junio",
-      "julio",
-      "agosto",
-      "septiembre",
-      "octubre",
-      "noviembre",
-      "diciembre"
-    ];
+    </div>
 
+    <div id="turnos">
 
-    function formatoFecha(fecha) {
+      <p class="vacio">
+        Cargando...
+      </p>
 
-      const año = fecha.getFullYear();
+    </div>
 
-      const mes = String(
-        fecha.getMonth() + 1
-      ).padStart(2, "0");
-
-      const dia = String(
-        fecha.getDate()
-      ).padStart(2, "0");
-
-      return `${año}-${mes}-${dia}`;
-    }
+  </div>
 
 
-    async function cargarTurnos() {
+  <a
+    href="reservas.html"
+    class="volver"
+  >
+    ← Ir a reservar turno
+  </a>
 
-      const contenedor =
-        document.getElementById("turnos");
-
-      const nombreMes =
-        document.getElementById("nombreMes");
-
-
-      nombreMes.textContent =
-        nombresMeses[fechaActual.getMonth()] +
-        " " +
-        fechaActual.getFullYear();
+</div>
 
 
-      contenedor.innerHTML =
-        '<p class="vacio">Cargando turnos...</p>';
+<script>
+
+const SUPABASE_URL =
+  "https://tfwejlwycexmcgznxlao.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_RnheFzHcB78UTEaXBYOp9g_ZbktcycR";
 
 
-      const año =
-        fechaActual.getFullYear();
-
-      const mes =
-        fechaActual.getMonth();
-
-
-      const primerDia =
-        formatoFecha(
-          new Date(año, mes, 1)
-        );
+const horarios = [
+  "14:40",
+  "15:40",
+  "16:40",
+  "17:40",
+  "18:40",
+  "19:40",
+  "20:40"
+];
 
 
-      const ultimoDia =
-        formatoFecha(
-          new Date(año, mes + 1, 0)
-        );
+let fechaActual = new Date();
 
 
-      try {
+const nombresMeses = [
+  "enero",
+  "febrero",
+  "marzo",
+  "abril",
+  "mayo",
+  "junio",
+  "julio",
+  "agosto",
+  "septiembre",
+  "octubre",
+  "noviembre",
+  "diciembre"
+];
 
-        const url =
-          SUPABASE_URL +
-          "/rest/v1/turnos" +
-          "?fecha=gte." + primerDia +
-          "&fecha=lte." + ultimoDia +
-          "&select=id,fecha,hora,nombre,telefono,estado";
+
+function formatoFecha(fecha) {
+
+  const año =
+    fecha.getFullYear();
+
+  const mes =
+    String(
+      fecha.getMonth() + 1
+    ).padStart(2, "0");
+
+  const dia =
+    String(
+      fecha.getDate()
+    ).padStart(2, "0");
+
+  return `${año}-${mes}-${dia}`;
+}
 
 
-        const respuesta = await fetch(url, {
+/* =========================
+   CARGAR TURNOS
+========================= */
 
+async function cargarTurnos() {
+
+  const contenedor =
+    document.getElementById("turnos");
+
+  const nombreMes =
+    document.getElementById("nombreMes");
+
+
+  nombreMes.textContent =
+    nombresMeses[
+      fechaActual.getMonth()
+    ] +
+    " " +
+    fechaActual.getFullYear();
+
+
+  contenedor.innerHTML =
+    '<p class="vacio">Cargando...</p>';
+
+
+  const año =
+    fechaActual.getFullYear();
+
+  const mes =
+    fechaActual.getMonth();
+
+
+  const primerDia =
+    formatoFecha(
+      new Date(año, mes, 1)
+    );
+
+
+  const ultimoDia =
+    formatoFecha(
+      new Date(año, mes + 1, 0)
+    );
+
+
+  try {
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/turnos" +
+      "?fecha=gte." +
+      primerDia +
+      "&fecha=lte." +
+      ultimoDia +
+      "&select=id,fecha,hora,nombre,telefono,estado" +
+      "&order=fecha.asc,hora.asc";
+
+
+    const respuesta =
+      await fetch(
+        url,
+        {
           method: "GET",
 
           headers: {
@@ -262,235 +398,514 @@
             "Authorization":
               "Bearer " + SUPABASE_KEY
           }
-
-        });
-
-
-        const texto =
-          await respuesta.text();
-
-
-        if (!respuesta.ok) {
-
-          console.error(
-            "Error Supabase:",
-            respuesta.status,
-            texto
-          );
-
-          throw new Error(
-            "Supabase respondió con error " +
-            respuesta.status
-          );
         }
+      );
 
 
-        const datos =
-          JSON.parse(texto);
+    const texto =
+      await respuesta.text();
 
 
-        contenedor.innerHTML = "";
+    if (!respuesta.ok) {
+
+      console.error(
+        "Error Supabase:",
+        respuesta.status,
+        texto
+      );
+
+      throw new Error(
+        "Error Supabase"
+      );
+    }
 
 
-        if (!datos.length) {
-
-          contenedor.innerHTML =
-            '<p class="vacio">' +
-            'No hay turnos reservados este mes.' +
-            '</p>';
-
-          return;
-        }
+    const datos =
+      JSON.parse(texto);
 
 
-        datos.sort(function(a, b) {
-
-          if (a.fecha !== b.fecha) {
-            return a.fecha.localeCompare(b.fecha);
-          }
-
-          return a.hora.localeCompare(b.hora);
-
-        });
+    contenedor.innerHTML = "";
 
 
-        datos.forEach(function(turno) {
+    if (datos.length === 0) {
 
-          const div =
-            document.createElement("div");
+      contenedor.innerHTML =
+        '<p class="vacio">' +
+        'No hay turnos este mes.' +
+        '</p>';
 
-          div.className = "turno";
+      return;
+    }
 
 
-          div.innerHTML = `
-            <strong>
-              📅 ${turno.fecha}
-              — 🕐 ${turno.hora}
-            </strong>
+    datos.forEach(
+      function(turno) {
 
-            <p>
-              👤 ${turno.nombre}
-            </p>
+        const div =
+          document.createElement("div");
 
-            <p>
-              📱 ${turno.telefono}
-            </p>
+        div.className =
+          "turno";
 
-            <p>
-              Estado: ${turno.estado}
-            </p>
 
-            ${
-              turno.estado !== "cancelado"
-              ? `
-                <button
-                  class="cancelar"
-                  onclick="cancelarTurno(${turno.id})">
-                  ❌ Cancelar turno
-                </button>
-              `
-              : ""
-            }
+        let boton = "";
+
+
+        if (
+          turno.estado ===
+          "bloqueado"
+        ) {
+
+          boton = `
+            <button
+              class="desbloquear"
+              onclick="desbloquearHorario(${turno.id})"
+            >
+              🔓 Desbloquear horario
+            </button>
           `;
 
+        } else if (
+          turno.estado !==
+          "cancelado"
+        ) {
 
-          contenedor.appendChild(div);
+          boton = `
+            <button
+              class="cancelar"
+              onclick="cancelarTurno(${turno.id})"
+            >
+              ❌ Cancelar turno
+            </button>
+          `;
 
-        });
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        contenedor.innerHTML =
-          '<p class="error">' +
-          'No se pudieron cargar los turnos.' +
-          '</p>';
-
-      }
-
-    }
-
-
-    async function cancelarTurno(id) {
-
-      const confirmar =
-        confirm(
-          "¿Seguro que querés cancelar este turno?"
-        );
-
-
-      if (!confirmar) {
-        return;
-      }
-
-
-      try {
-
-        const respuesta = await fetch(
-          SUPABASE_URL +
-          "/rest/v1/turnos?id=eq." +
-          id,
-          {
-
-            method: "PATCH",
-
-            headers: {
-              "Content-Type": "application/json",
-              "apikey": SUPABASE_KEY,
-              "Authorization":
-                "Bearer " + SUPABASE_KEY,
-              "Prefer": "return=minimal"
-            },
-
-            body: JSON.stringify({
-              estado: "cancelado"
-            })
-
-          }
-        );
-
-
-        if (!respuesta.ok) {
-
-          const texto =
-            await respuesta.text();
-
-          console.error(texto);
-
-          throw new Error(
-            "No se pudo cancelar"
-          );
         }
 
 
-        await cargarTurnos();
+        div.innerHTML = `
+
+          <strong>
+            📅 ${turno.fecha}
+            — 🕐 ${turno.hora}
+          </strong>
+
+          ${
+            turno.estado === "bloqueado"
+            ? `
+              <p>🚫 Horario bloqueado</p>
+            `
+            : `
+              <p>👤 ${turno.nombre}</p>
+              <p>📱 ${turno.telefono}</p>
+            `
+          }
+
+          <p>
+            Estado: ${turno.estado}
+          </p>
+
+          ${boton}
+
+        `;
 
 
-      } catch (error) {
-
-        console.error(error);
-
-        alert(
-          "No se pudo cancelar el turno."
-        );
+        contenedor.appendChild(div);
 
       }
+    );
 
+
+  } catch (error) {
+
+    console.error(error);
+
+    contenedor.innerHTML =
+      '<p class="error">' +
+      'No se pudieron cargar los turnos.' +
+      '</p>';
+
+  }
+
+}
+
+
+/* =========================
+   BLOQUEAR HORARIO
+========================= */
+
+async function bloquearHorario() {
+
+  const fecha =
+    document.getElementById(
+      "fechaBloqueo"
+    ).value;
+
+  const hora =
+    document.getElementById(
+      "horaBloqueo"
+    ).value;
+
+  const mensaje =
+    document.getElementById(
+      "mensajeBloqueo"
+    );
+
+
+  mensaje.textContent = "";
+
+
+  if (!fecha) {
+
+    mensaje.className =
+      "mensaje error";
+
+    mensaje.textContent =
+      "Elegí una fecha.";
+
+    return;
+  }
+
+
+  try {
+
+    /* comprobar si ya existe */
+
+    const comprobar =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/turnos" +
+        "?fecha=eq." +
+        fecha +
+        "&hora=eq." +
+        encodeURIComponent(hora) +
+        "&select=id,estado",
+        {
+          method: "GET",
+
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization":
+              "Bearer " + SUPABASE_KEY
+          }
+        }
+      );
+
+
+    const existentes =
+      await comprobar.json();
+
+
+    const ocupado =
+      existentes.some(
+        function(turno) {
+
+          return turno.estado !==
+            "cancelado";
+
+        }
+      );
+
+
+    if (ocupado) {
+
+      mensaje.className =
+        "mensaje error";
+
+      mensaje.textContent =
+        "Ese horario ya está ocupado.";
+
+      return;
     }
 
 
-    function mesAnterior() {
+    /* crear bloqueo */
 
-      const hoy = new Date();
+    const respuesta =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/turnos",
+        {
+          method: "POST",
 
-      const mesActual =
-        new Date(
-          hoy.getFullYear(),
-          hoy.getMonth(),
-          1
-        );
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY,
+
+            "Prefer":
+              "return=minimal"
+          },
+
+          body: JSON.stringify({
+
+            fecha: fecha,
+
+            hora: hora,
+
+            nombre:
+              "Horario bloqueado",
+
+            telefono:
+              "",
+
+            estado:
+              "bloqueado"
+
+          })
+        }
+      );
 
 
-      const nuevoMes =
-        new Date(
-          fechaActual.getFullYear(),
-          fechaActual.getMonth() - 1,
-          1
-        );
+    if (!respuesta.ok) {
 
+      const texto =
+        await respuesta.text();
 
-      if (nuevoMes < mesActual) {
-        return;
-      }
+      console.error(texto);
 
-
-      fechaActual = nuevoMes;
-
-      cargarTurnos();
-
+      throw new Error(
+        "No se pudo bloquear"
+      );
     }
 
 
-    function mesSiguiente() {
+    mensaje.className =
+      "mensaje exito";
 
-      fechaActual =
-        new Date(
-          fechaActual.getFullYear(),
-          fechaActual.getMonth() + 1,
-          1
-        );
+    mensaje.textContent =
+      "✅ Horario bloqueado correctamente.";
 
 
-      cargarTurnos();
+    cargarTurnos();
 
+
+  } catch (error) {
+
+    console.error(error);
+
+    mensaje.className =
+      "mensaje error";
+
+    mensaje.textContent =
+      "No se pudo bloquear el horario.";
+
+  }
+
+}
+
+
+/* =========================
+   DESBLOQUEAR
+========================= */
+
+async function desbloquearHorario(id) {
+
+  const confirmar =
+    confirm(
+      "¿Querés desbloquear este horario?"
+    );
+
+
+  if (!confirmar) {
+    return;
+  }
+
+
+  try {
+
+    const respuesta =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/turnos?id=eq." +
+        id,
+        {
+          method: "PATCH",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY,
+
+            "Prefer":
+              "return=minimal"
+          },
+
+          body: JSON.stringify({
+            estado:
+              "cancelado"
+          })
+        }
+      );
+
+
+    if (!respuesta.ok) {
+
+      throw new Error(
+        "No se pudo desbloquear"
+      );
     }
 
 
     cargarTurnos();
 
-  </script>
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "No se pudo desbloquear."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   CANCELAR TURNO
+========================= */
+
+async function cancelarTurno(id) {
+
+  const confirmar =
+    confirm(
+      "¿Seguro que querés cancelar este turno?"
+    );
+
+
+  if (!confirmar) {
+    return;
+  }
+
+
+  try {
+
+    const respuesta =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/turnos?id=eq." +
+        id,
+        {
+          method: "PATCH",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY,
+
+            "Prefer":
+              "return=minimal"
+          },
+
+          body: JSON.stringify({
+            estado:
+              "cancelado"
+          })
+        }
+      );
+
+
+    if (!respuesta.ok) {
+
+      throw new Error(
+        "No se pudo cancelar"
+      );
+    }
+
+
+    cargarTurnos();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "No se pudo cancelar el turno."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   CAMBIAR MES
+========================= */
+
+function mesAnterior() {
+
+  const hoy =
+    new Date();
+
+  const mesActual =
+    new Date(
+      hoy.getFullYear(),
+      hoy.getMonth(),
+      1
+    );
+
+
+  const nuevoMes =
+    new Date(
+      fechaActual.getFullYear(),
+      fechaActual.getMonth() - 1,
+      1
+    );
+
+
+  if (nuevoMes < mesActual) {
+    return;
+  }
+
+
+  fechaActual =
+    nuevoMes;
+
+  cargarTurnos();
+
+}
+
+
+function mesSiguiente() {
+
+  fechaActual =
+    new Date(
+      fechaActual.getFullYear(),
+      fechaActual.getMonth() + 1,
+      1
+    );
+
+
+  cargarTurnos();
+
+}
+
+
+/* INICIAR */
+
+cargarTurnos();
+
+</script>
 
 </body>
 </html>

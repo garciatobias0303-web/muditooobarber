@@ -111,6 +111,31 @@
       background: #20bd5a;
     }
 
+    /* SERVICIOS */
+
+    .servicio {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      border-bottom: 1px solid #292929;
+      font-size: 18px;
+    }
+
+    .servicio:last-child {
+      border-bottom: none;
+    }
+
+    .nombre-servicio {
+      color: #ddd;
+    }
+
+    .precio {
+      font-weight: bold;
+      color: white;
+      font-size: 20px;
+    }
+
     footer {
       text-align: center;
       padding: 30px 20px;
@@ -121,6 +146,7 @@
     }
 
     @media (max-width: 600px) {
+
       header {
         padding: 65px 20px 55px;
       }
@@ -145,6 +171,14 @@
       .card h2 {
         font-size: 22px;
       }
+
+      .servicio {
+        font-size: 16px;
+      }
+
+      .precio {
+        font-size: 18px;
+      }
     }
   </style>
 
@@ -160,6 +194,8 @@
   <div class="container">
 
 ```
+<!-- RESERVAS -->
+
 <div class="card">
   <h2>📅 Reservá tu turno</h2>
 
@@ -185,6 +221,32 @@
     💬 Contactar por WhatsApp
   </a>
 </div>
+
+
+<!-- SERVICIOS -->
+
+<div class="card">
+  <h2>✂️ Servicios y precios</h2>
+
+  <div class="servicio">
+    <span class="nombre-servicio">✂️ Corte</span>
+    <span class="precio">$7.000</span>
+  </div>
+
+  <div class="servicio">
+    <span class="nombre-servicio">✂️🧔 Corte + barba</span>
+    <span class="precio">$8.000</span>
+  </div>
+
+  <div class="servicio">
+    <span class="nombre-servicio">🧔 Solo barba</span>
+    <span class="precio">$2.000</span>
+  </div>
+
+</div>
+
+
+<!-- PRESENTACIÓN -->
 
 <div class="card">
   <h2>✂️ MUDITOOO BARBER</h2>

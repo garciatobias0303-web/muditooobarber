@@ -78,14 +78,16 @@
     }
 
     .boton-reserva,
-    .boton-whatsapp {
+    .boton-whatsapp,
+    .boton-instagram,
+    .boton-ubicacion {
       display: block;
       width: 100%;
       padding: 18px;
       border-radius: 10px;
       text-decoration: none;
       text-align: center;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: bold;
       transition: 0.2s;
     }
@@ -96,22 +98,32 @@
       margin-bottom: 15px;
     }
 
-    .boton-reserva:hover {
-      transform: scale(1.02);
-      background: #e8e8e8;
-    }
-
     .boton-whatsapp {
       background: #25D366;
       color: white;
+      margin-bottom: 15px;
     }
 
-    .boton-whatsapp:hover {
+    .boton-instagram {
+      background: #222;
+      color: white;
+      border: 1px solid #444;
+      margin-bottom: 15px;
+    }
+
+    .boton-ubicacion {
+      background: #222;
+      color: white;
+      border: 1px solid #444;
+    }
+
+    .boton-reserva:hover,
+    .boton-whatsapp:hover,
+    .boton-instagram:hover,
+    .boton-ubicacion:hover {
       transform: scale(1.02);
-      background: #20bd5a;
+      opacity: 0.9;
     }
-
-    /* SERVICIOS */
 
     .servicio {
       display: flex;
@@ -134,6 +146,13 @@
       font-weight: bold;
       color: white;
       font-size: 20px;
+    }
+
+    .ubicacion {
+      text-align: center;
+      color: #ccc;
+      line-height: 1.7;
+      margin-bottom: 20px;
     }
 
     footer {
@@ -242,7 +261,43 @@
     <span class="nombre-servicio">🧔 Solo barba</span>
     <span class="precio">$2.000</span>
   </div>
+</div>
 
+
+<!-- UBICACIÓN -->
+
+<div class="card">
+  <h2>📍 Encontranos</h2>
+
+  <p class="ubicacion">
+    Barrio 80 Viviendas<br>
+    Donchenko 24
+  </p>
+
+  <a
+    href="https://www.google.com/maps/search/?api=1&query=Donchenko+24+Barrio+80+Viviendas"
+    target="_blank"
+    class="boton-ubicacion">
+    📍 Ver ubicación
+  </a>
+</div>
+
+
+<!-- INSTAGRAM -->
+
+<div class="card">
+  <h2>📸 Seguinos</h2>
+
+  <p class="info">
+    Mirá nuestros trabajos y novedades en Instagram.
+  </p>
+
+  <a
+    href="https://www.instagram.com/muditooobarber/"
+    target="_blank"
+    class="boton-instagram">
+    📸 @muditooobarber
+  </a>
 </div>
 
 

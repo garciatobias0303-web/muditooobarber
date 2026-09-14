@@ -1,5 +1,5 @@
-
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -15,50 +15,56 @@
     }
 
     body {
-      background: #111;
+      background: #0b0b0b;
       color: white;
+      min-height: 100vh;
     }
 
     header {
       text-align: center;
-      padding: 60px 20px;
-      background: #000;
+      padding: 80px 20px 70px;
+      background: linear-gradient(180deg, #000 0%, #111 100%);
+      border-bottom: 1px solid #222;
     }
 
     header h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
+      font-size: 46px;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
     }
 
     header p {
-      color: #ccc;
+      color: #aaa;
       font-size: 18px;
     }
 
     .container {
       max-width: 700px;
       margin: auto;
-      padding: 40px 20px;
+      padding: 45px 20px;
     }
 
     .card {
-      background: #1c1c1c;
-      padding: 30px;
-      border-radius: 15px;
+      background: #171717;
+      padding: 32px;
+      border-radius: 18px;
       margin-bottom: 25px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+      border: 1px solid #292929;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
     }
 
-    h2 {
+    .card h2 {
       margin-bottom: 20px;
       text-align: center;
+      font-size: 25px;
     }
 
     .info {
       text-align: center;
-      color: #ccc;
-      line-height: 1.8;
+      color: #bdbdbd;
+      line-height: 1.7;
       margin-bottom: 25px;
+      font-size: 16px;
     }
 
     .horario {
@@ -66,32 +72,67 @@
       font-size: 18px;
       color: #fff;
       margin-bottom: 25px;
+      padding: 14px;
+      background: #101010;
+      border-radius: 10px;
     }
 
     .boton-reserva {
       display: block;
       width: 100%;
-      padding: 17px;
+      padding: 18px;
       background: white;
       color: black;
-      border-radius: 8px;
+      border-radius: 10px;
       text-decoration: none;
       text-align: center;
       font-size: 19px;
       font-weight: bold;
+      transition: 0.2s;
     }
 
     .boton-reserva:hover {
-      background: #ddd;
+      transform: scale(1.02);
+      background: #e8e8e8;
     }
 
     footer {
       text-align: center;
-      padding: 25px;
-      color: #888;
+      padding: 30px 20px;
+      color: #777;
       background: #000;
+      border-top: 1px solid #222;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 65px 20px 55px;
+      }
+
+      header h1 {
+        font-size: 34px;
+        letter-spacing: 2px;
+      }
+
+      header p {
+        font-size: 16px;
+      }
+
+      .container {
+        padding: 30px 15px;
+      }
+
+      .card {
+        padding: 25px 20px;
+      }
+
+      .card h2 {
+        font-size: 22px;
+      }
     }
   </style>
+
 </head>
 
 <body>
@@ -103,39 +144,40 @@
 
   <div class="container">
 
-    <div class="card">
-      <h2>📅 Reservá tu turno</h2>
+```
+<div class="card">
+  <h2>📅 Reservá tu turno</h2>
 
-      <p class="info">
-        Elegí el día y horario disponible directamente desde nuestra agenda.
-      </p>
+  <p class="info">
+    Elegí el día y horario disponible directamente desde nuestra agenda.
+  </p>
 
-      <p class="horario">
-        🕐 Atención de <strong>14:40 a 21:40</strong>
-      </p>
+  <p class="horario">
+    🕐 Atención de <strong>14:40 a 21:40</strong>
+  </p>
 
-      <a
-        href="reservas.html"
-        target="_blank"
-        class="boton-reserva">
-        📅 Reservar turno
-      </a>
-    </div>
+  <a
+    href="reservas.html"
+    target="_blank"
+    class="boton-reserva">
+    📅 Reservar turno
+  </a>
+</div>
 
-    <div class="card">
-      <h2>✂️ Muditooo Barber</h2>
+<div class="card">
+  <h2>✂️ MUDITOOO BARBER</h2>
 
-      <p class="info">
-        Reservá tu turno de manera rápida y sencilla.
-      </p>
-    </div>
+  <p class="info">
+    Reservá tu turno de manera rápida y sencilla.
+  </p>
+</div>
+```
 
   </div>
 
   <footer>
-    © 2026 Muditooo Barber
+    © 2026 MUDITOOO BARBER
   </footer>
 
 </body>
 </html>
-```

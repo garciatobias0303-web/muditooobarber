@@ -75,11 +75,11 @@
     .turno strong {
       display: block;
       font-size: 18px;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
     }
 
     .turno p {
-      margin: 5px 0;
+      margin: 6px 0;
       color: #ccc;
     }
 
@@ -92,6 +92,7 @@
     .error {
       color: #ff6b6b;
       text-align: center;
+      padding: 15px;
     }
 
     .volver {
@@ -109,29 +110,41 @@
   <div class="container">
 
     <h1>MUDITOOO BARBER</h1>
-    <p class="subtitulo">📅 Panel de administrador</p>
+
+    <p class="subtitulo">
+      📅 Panel de administrador
+    </p>
 
     <div class="card">
 
       <div class="mes">
-        <button type="button" onclick="mesAnterior()">‹</button>
+
+        <button type="button" onclick="mesAnterior()">
+          ‹
+        </button>
 
         <span id="nombreMes"></span>
 
-        <button type="button" onclick="mesSiguiente()">›</button>
+        <button type="button" onclick="mesSiguiente()">
+          ›
+        </button>
+
       </div>
 
       <div id="turnos">
-        <p class="vacio">Cargando turnos...</p>
+        <p class="vacio">
+          Cargando turnos...
+        </p>
       </div>
 
     </div>
 
-    <a href="index.html" class="volver">
-      ← ir a reservar turno
+    <a href="reservas.html" class="volver">
+      ← Ir a reservar turno
     </a>
 
   </div>
+
 
   <script>
 
@@ -217,48 +230,73 @@
 
       try {
 
-        const respuesta = await fetch(
+        const url =
           SUPABASE_URL +
           "/rest/v1/turnos" +
-          "?fecha=gte." +
-          primerDia +
-          "&fecha=lte." +
-          ultimoDia +
-          "&select=fecha,hora,nombre,telefono,estado" +
-          "&order=fecha.asc,hora.asc",
-          {
-            method: "GET",
+          "?fecha=gte." + primerDia +
+          "&fecha=lte." + ultimoDia +
+          "&select=fecha,hora,nombre,telefono,estado";
 
-            headers: {
-              "apikey": SUPABASE_KEY,
-              "Authorization":
-                "Bearer " + SUPABASE_KEY
-            }
+
+        const respuesta = await fetch(url, {
+
+          method: "GET",
+
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization":
+              "Bearer " + SUPABASE_KEY
           }
-        );
+
+        });
+
+
+        const texto =
+          await respuesta.text();
 
 
         if (!respuesta.ok) {
+
+          console.error(
+            "Error Supabase:",
+            respuesta.status,
+            texto
+          );
+
           throw new Error(
-            "No se pudieron cargar los turnos"
+            "Supabase respondió con error " +
+            respuesta.status
           );
         }
 
 
         const datos =
-          await respuesta.json();
+          JSON.parse(texto);
 
 
         contenedor.innerHTML = "";
 
 
-        if (datos.length === 0) {
+        if (!datos.length) {
 
           contenedor.innerHTML =
-            '<p class="vacio">No hay turnos reservados este mes.</p>';
+            '<p class="vacio">' +
+            'No hay turnos reservados este mes.' +
+            '</p>';
 
           return;
         }
+
+
+        datos.sort(function(a, b) {
+
+          if (a.fecha !== b.fecha) {
+            return a.fecha.localeCompare(b.fecha);
+          }
+
+          return a.hora.localeCompare(b.hora);
+
+        });
 
 
         datos.forEach(function(turno) {
@@ -270,10 +308,22 @@
 
 
           div.innerHTML = `
-            <strong>📅 ${turno.fecha} — 🕐 ${turno.hora}</strong>
-            <p>👤 ${turno.nombre}</p>
-            <p>📱 ${turno.telefono}</p>
-            <p>Estado: ${turno.estado}</p>
+            <strong>
+              📅 ${turno.fecha}
+              — 🕐 ${turno.hora}
+            </strong>
+
+            <p>
+              👤 ${turno.nombre}
+            </p>
+
+            <p>
+              📱 ${turno.telefono}
+            </p>
+
+            <p>
+              Estado: ${turno.estado}
+            </p>
           `;
 
 
@@ -287,7 +337,10 @@
         console.error(error);
 
         contenedor.innerHTML =
-          '<p class="error">Error al cargar los turnos.</p>';
+          '<p class="error">' +
+          'No se pudieron cargar los turnos.<br>' +
+          'Revisá la consola para ver el error.' +
+          '</p>';
 
       }
 

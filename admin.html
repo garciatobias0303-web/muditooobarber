@@ -39,7 +39,6 @@
       background: #1c1c1c;
       padding: 20px;
       border-radius: 15px;
-      margin-bottom: 20px;
     }
 
     .mes {
@@ -81,6 +80,22 @@
     .turno p {
       margin: 6px 0;
       color: #ccc;
+    }
+
+    .cancelar {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #b00020;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .cancelar:hover {
+      opacity: 0.85;
     }
 
     .vacio {
@@ -235,7 +250,7 @@
           "/rest/v1/turnos" +
           "?fecha=gte." + primerDia +
           "&fecha=lte." + ultimoDia +
-          "&select=fecha,hora,nombre,telefono,estado";
+          "&select=id,fecha,hora,nombre,telefono,estado";
 
 
         const respuesta = await fetch(url, {
@@ -324,6 +339,18 @@
             <p>
               Estado: ${turno.estado}
             </p>
+
+            ${
+              turno.estado !== "cancelado"
+              ? `
+                <button
+                  class="cancelar"
+                  onclick="cancelarTurno(${turno.id})">
+                  ❌ Cancelar turno
+                </button>
+              `
+              : ""
+            }
           `;
 
 
@@ -338,9 +365,76 @@
 
         contenedor.innerHTML =
           '<p class="error">' +
-          'No se pudieron cargar los turnos.<br>' +
-          'Revisá la consola para ver el error.' +
+          'No se pudieron cargar los turnos.' +
           '</p>';
+
+      }
+
+    }
+
+
+    async function cancelarTurno(id) {
+
+      const confirmar =
+        confirm(
+          "¿Seguro que querés cancelar este turno?"
+        );
+
+
+      if (!confirmar) {
+        return;
+      }
+
+
+      try {
+
+        const respuesta = await fetch(
+          SUPABASE_URL +
+          "/rest/v1/turnos?id=eq." +
+          id,
+          {
+
+            method: "PATCH",
+
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_KEY,
+              "Authorization":
+                "Bearer " + SUPABASE_KEY,
+              "Prefer": "return=minimal"
+            },
+
+            body: JSON.stringify({
+              estado: "cancelado"
+            })
+
+          }
+        );
+
+
+        if (!respuesta.ok) {
+
+          const texto =
+            await respuesta.text();
+
+          console.error(texto);
+
+          throw new Error(
+            "No se pudo cancelar"
+          );
+        }
+
+
+        await cargarTurnos();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert(
+          "No se pudo cancelar el turno."
+        );
 
       }
 
